@@ -529,7 +529,10 @@ export default function CapitalCryptoGermanyLanding() {
 
           <h2 className="text-3xl font-semibold text-white">{t.formTitle}</h2>
 
-          <form onSubmit={handleSubmit} className="mt-8 grid gap-4 md:grid-cols-2">
+          <form
+  onSubmit={handleSubmit}
+  className="mt-8 grid gap-4 md:grid-cols-2"
+>
             <p className="md:col-span-2 text-sm leading-7 text-slate-300">
               {t.intakeIntro}
             </p>
@@ -589,12 +592,11 @@ export default function CapitalCryptoGermanyLanding() {
             </p>
 
             <button
-              type="submit"
-              disabled={loading}
-              className="md:col-span-2 w-full rounded-xl bg-slate-200 px-6 py-3 font-semibold text-slate-900 transition hover:bg-white disabled:opacity-60"
-            >
-              {loading ? t.sendLoading : t.formBtn}
-            </button>
+  type="submit"
+  className="w-full rounded-xl bg-slate-200 px-6 py-3 font-semibold text-slate-900"
+>
+  {t.formBtn}
+</button>
 
             {message && (
               <p className="md:col-span-2 text-sm text-white">{message}</p>
