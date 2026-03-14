@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '../../../lib/prisma';
+import { supabaseAdmin } from '../../../lib/supabase-admin';
 
 export async function POST(req: Request) {
   try {
@@ -22,21 +22,33 @@ export async function POST(req: Request) {
       );
     }
 
-    const lead = await prisma.lead.create({
-      data: {
-        name,
-        email,
-        phone,
-        platform,
-        wallet,
-        transactionHash,
-        description,
-      },
-    });
+    const { data, error } = await supabaseAdmin
+      .from('leads')
+      .insert([
+        {
+          name,
+          email,
+          phone,
+          platform,
+          wallet,
+          transaction_hash: transactionHash,
+          description,
+        },
+      ])
+      .select('id')
+      .single();
+
+    if (error) {
+      console.error('SUPABASE INSERT ERROR:', error);
+      return NextResponse.json(
+        { error: 'Failed to save lead.' },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
-      leadId: lead.id,
+      leadId: data.id,
     });
   } catch (error) {
     console.error('CASE REVIEW API ERROR:', error);

@@ -27,6 +27,7 @@ type Translation = {
   formTitle: string;
   formName: string;
   formEmail: string;
+  formPhone: string;
   formPlatform: string;
   formWallet: string;
   formTx: string;
@@ -39,6 +40,10 @@ type Translation = {
   faqTitle: string;
   faqs: [string, string][];
   whatsapp: string;
+  sendLoading: string;
+  sendSuccess: string;
+  sendError: string;
+  networkError: string;
 };
 
 const translations: Record<Language, Translation> = {
@@ -78,6 +83,7 @@ const translations: Record<Language, Translation> = {
     formTitle: 'Kostenlose Fallprüfung (Krypto-Recovery Analyse)',
     formName: 'Ihr Name',
     formEmail: 'E-Mail Adresse',
+    formPhone: 'Telefonnummer',
     formPlatform: 'Name der Plattform oder des Brokers',
     formWallet: 'Wallet-Adresse (optional)',
     formTx: 'Transaktions-ID / Hash (optional)',
@@ -110,6 +116,10 @@ const translations: Record<Language, Translation> = {
       ],
     ],
     whatsapp: 'WhatsApp',
+    sendLoading: 'Wird gesendet...',
+    sendSuccess: 'Fall erfolgreich gesendet.',
+    sendError: 'Beim Senden ist ein Fehler aufgetreten.',
+    networkError: 'Netzwerkfehler. Bitte versuchen Sie es erneut.',
   },
   en: {
     brandSub: 'Blockchain Analysis & Advisory',
@@ -147,6 +157,7 @@ const translations: Record<Language, Translation> = {
     formTitle: 'Free Case Review (Crypto Recovery Analysis)',
     formName: 'Your name',
     formEmail: 'Email address',
+    formPhone: 'Phone number',
     formPlatform: 'Name of the platform or broker',
     formWallet: 'Wallet address (optional)',
     formTx: 'Transaction ID / hash (optional)',
@@ -179,38 +190,110 @@ const translations: Record<Language, Translation> = {
       ],
     ],
     whatsapp: 'WhatsApp',
+    sendLoading: 'Sending...',
+    sendSuccess: 'Case submitted successfully.',
+    sendError: 'Something went wrong while sending.',
+    networkError: 'Network error. Please try again.',
   },
 };
 
 const chains = [
-  { name: 'Bitcoin (BTC)', icon: '/btc.png', link: 'https://coinmarketcap.com/currencies/bitcoin/' },
-  { name: 'Ethereum (ETH)', icon: '/eth.png', link: 'https://coinmarketcap.com/currencies/ethereum/' },
-  { name: 'Tron (TRX)', icon: '/trx.png', link: 'https://coinmarketcap.com/currencies/tron/' },
-  { name: 'BNB Chain', icon: '/bnb.png', link: 'https://coinmarketcap.com/currencies/bnb/' },
-  { name: 'Polygon', icon: '/polygon.png', link: 'https://coinmarketcap.com/currencies/polygon/' },
-  { name: 'Solana', icon: '/sol.png', link: 'https://coinmarketcap.com/currencies/solana/' },
+  {
+    name: 'Bitcoin (BTC)',
+    icon: '/btc.png',
+    link: 'https://coinmarketcap.com/currencies/bitcoin/',
+  },
+  {
+    name: 'Ethereum (ETH)',
+    icon: '/eth.png',
+    link: 'https://coinmarketcap.com/currencies/ethereum/',
+  },
+  {
+    name: 'Tron (TRX)',
+    icon: '/trx.png',
+    link: 'https://coinmarketcap.com/currencies/tron/',
+  },
+  {
+    name: 'BNB Chain',
+    icon: '/bnb.png',
+    link: 'https://coinmarketcap.com/currencies/bnb/',
+  },
+  {
+    name: 'Polygon',
+    icon: '/polygon.png',
+    link: 'https://coinmarketcap.com/currencies/polygon/',
+  },
+  {
+    name: 'Solana',
+    icon: '/sol.png',
+    link: 'https://coinmarketcap.com/currencies/solana/',
+  },
 ];
 
 export default function CapitalCryptoGermanyLanding() {
   const [lang, setLang] = useState<Language>('de');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
   const t = translations[lang];
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage('');
+
+    const formData = new FormData(e.currentTarget);
+
+    const payload = {
+      name: String(formData.get('name') || ''),
+      email: String(formData.get('email') || ''),
+      phone: String(formData.get('phone') || ''),
+      platform: String(formData.get('platform') || ''),
+      wallet: String(formData.get('wallet') || ''),
+      transactionHash: String(formData.get('transactionHash') || ''),
+      description: String(formData.get('description') || ''),
+    };
+
+    try {
+      const res = await fetch('/api/case-review', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setMessage(data.error || t.sendError);
+        return;
+      }
+
+      setMessage(`${t.sendSuccess} Lead ID: ${data.leadId}`);
+      e.currentTarget.reset();
+    } catch {
+      setMessage(t.networkError);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-<main className="min-h-screen bg-gradient-to-b from-black via-red-950 to-amber-700 text-white font-bold">      <header className="sticky top-0 z-30 border-b border-white/10 bg-slate-900/70 backdrop-blur">
+    <main className="min-h-screen bg-gradient-to-b from-black via-red-950 to-amber-700 text-white font-bold">
+      <header className="sticky top-0 z-30 border-b border-white/10 bg-slate-900/70 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-          <div className="flex items-center gap-3">
+          <a href="/" className="flex items-center gap-2 transition hover:opacity-80">
             <img
-              src="/logo-capital-crypto-germany.png"
+              src="/favicon.png"
               alt="Capital Crypto Germany"
-              className="h-12 w-12 rounded-2xl object-cover"
+              className="h-7 w-7 object-contain"
             />
-            <div>
+            <div className="leading-tight">
               <p className="text-sm font-semibold tracking-wide text-white">
                 CAPITAL CRYPTO GERMANY
               </p>
               <p className="text-xs text-slate-300">{t.brandSub}</p>
             </div>
-          </div>
+          </a>
 
           <nav className="hidden items-center gap-6 text-sm text-slate-200 md:flex">
             <a href="#analyse" className="hover:text-white">
@@ -344,87 +427,80 @@ export default function CapitalCryptoGermanyLanding() {
 
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {chains.map((chain) => (
-  <a
-    key={chain.name}
-    href={chain.link}
-    target="_blank"
-    rel="noreferrer"
-    className="rounded-2xl border border-white/10 bg-slate-900/35 p-6 text-center shadow-sm hover:bg-slate-900/60 transition"
-  >
-    <img
-      src={chain.icon}
-      alt={chain.name}
-      className="mx-auto mb-3 h-12 w-12 rounded-full object-contain"
-    />
-    <p className="font-semibold text-white">{chain.name}</p>
-  </a>
-))}
+              <a
+                key={chain.name}
+                href={chain.link}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-2xl border border-white/10 bg-slate-900/35 p-6 text-center shadow-sm transition hover:bg-slate-900/60"
+              >
+                <img
+                  src={chain.icon}
+                  alt={chain.name}
+                  className="mx-auto mb-3 h-12 w-12 rounded-full object-contain"
+                />
+                <p className="font-semibold text-white">{chain.name}</p>
+              </a>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="border-t border-white/10 bg-slate-800/25">
-  <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-    <h2 className="mb-6 text-3xl font-semibold text-white">
-      Crypto Market Information
-    </h2>
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+          <h2 className="mb-6 text-3xl font-semibold text-white">
+            Crypto Market Information
+          </h2>
 
-    <p className="mb-10 text-slate-200">
-      You can follow cryptocurrency market data through trusted public platforms.
-    </p>
+          <p className="mb-10 text-slate-200">
+            You can follow cryptocurrency market data through trusted public platforms.
+          </p>
 
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-      <a
-        href="https://coinmarketcap.com"
-        target="_blank"
-        rel="noreferrer"
-        className="rounded-2xl border border-white/10 bg-slate-900/35 p-6 text-center transition hover:bg-slate-900/60"
-      >
-        <p className="font-semibold text-white">CoinMarketCap</p>
-        <p className="mt-2 text-sm text-slate-300">
-          Global crypto market data
-        </p>
-      </a>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <a
+              href="https://coinmarketcap.com"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl border border-white/10 bg-slate-900/35 p-6 text-center transition hover:bg-slate-900/60"
+            >
+              <p className="font-semibold text-white">CoinMarketCap</p>
+              <p className="mt-2 text-sm text-slate-300">Global crypto market data</p>
+            </a>
 
-      <a
-        href="https://www.coingecko.com"
-        target="_blank"
-        rel="noreferrer"
-        className="rounded-2xl border border-white/10 bg-slate-900/35 p-6 text-center transition hover:bg-slate-900/60"
-      >
-        <p className="font-semibold text-white">CoinGecko</p>
-        <p className="mt-2 text-sm text-slate-300">
-          Prices and market analytics
-        </p>
-      </a>
+            <a
+              href="https://www.coingecko.com"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl border border-white/10 bg-slate-900/35 p-6 text-center transition hover:bg-slate-900/60"
+            >
+              <p className="font-semibold text-white">CoinGecko</p>
+              <p className="mt-2 text-sm text-slate-300">Prices and market analytics</p>
+            </a>
 
-      <a
-        href="https://www.tradingview.com"
-        target="_blank"
-        rel="noreferrer"
-        className="rounded-2xl border border-white/10 bg-slate-900/35 p-6 text-center transition hover:bg-slate-900/60"
-      >
-        <p className="font-semibold text-white">TradingView</p>
-        <p className="mt-2 text-sm text-slate-300">
-          Professional market charts
-        </p>
-      </a>
+            <a
+              href="https://www.tradingview.com"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl border border-white/10 bg-slate-900/35 p-6 text-center transition hover:bg-slate-900/60"
+            >
+              <p className="font-semibold text-white">TradingView</p>
+              <p className="mt-2 text-sm text-slate-300">Professional market charts</p>
+            </a>
 
-      <a
-        href="https://www.binance.com/en/markets"
-        target="_blank"
-        rel="noreferrer"
-        className="rounded-2xl border border-white/10 bg-slate-900/35 p-6 text-center transition hover:bg-slate-900/60"
-      >
-        <p className="font-semibold text-white">Binance Markets</p>
-        <p className="mt-2 text-sm text-slate-300">
-          Cryptocurrency trading markets
-        </p>
-      </a>
-    </div>
-  </div>
-</section>
-<section id="prozess" className="border-t border-white/10 bg-slate-800/35">
+            <a
+              href="https://www.binance.com/en/markets"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl border border-white/10 bg-slate-900/35 p-6 text-center transition hover:bg-slate-900/60"
+            >
+              <p className="font-semibold text-white">Binance Markets</p>
+              <p className="mt-2 text-sm text-slate-300">Cryptocurrency trading markets</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="prozess" className="border-t border-white/10 bg-slate-800/35">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
           <div className="max-w-2xl">
             <h2 className="text-3xl font-semibold text-white">{t.section3Title}</h2>
@@ -453,12 +529,10 @@ export default function CapitalCryptoGermanyLanding() {
 
           <h2 className="text-3xl font-semibold text-white">{t.formTitle}</h2>
 
-          <form
-  action="https://formsubmit.co/support@capitalcryptogermany.com"
-  method="POST"
-  className="mt-8 grid gap-4 md:grid-cols-2"
->
-            <p className="text-sm leading-7 text-slate-300">{t.intakeIntro}</p>
+          <form onSubmit={handleSubmit} className="mt-8 grid gap-4 md:grid-cols-2">
+            <p className="md:col-span-2 text-sm leading-7 text-slate-300">
+              {t.intakeIntro}
+            </p>
 
             <input
               type="text"
@@ -473,13 +547,15 @@ export default function CapitalCryptoGermanyLanding() {
               placeholder={t.formEmail}
               className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-400 outline-none"
             />
-<input
-  type="text"
-  name="phone"
-  placeholder="Phone Number"
-  required
-  className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-400 outline-none"
-/>
+
+            <input
+              type="text"
+              name="phone"
+              placeholder={t.formPhone}
+              required
+              className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-400 outline-none"
+            />
+
             <input
               type="text"
               name="platform"
@@ -505,28 +581,35 @@ export default function CapitalCryptoGermanyLanding() {
               rows={4}
               name="description"
               placeholder={t.formDesc}
-              className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-400 outline-none"
+              className="md:col-span-2 w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-400 outline-none"
             />
 
-            <p className="text-xs leading-6 text-slate-400">{t.formNote}</p>
-            
-<input type="hidden" name="_subject" value="New Case Review Submission" />
-<input type="hidden" name="_captcha" value="false" />
-<input type="hidden" name="_template" value="table" />
-            <button type="submit"
-              className="w-full rounded-xl bg-slate-200 px-6 py-3 font-semibold text-slate-900 transition hover:bg-white"
+            <p className="md:col-span-2 text-xs leading-6 text-slate-400">
+              {t.formNote}
+            </p>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="md:col-span-2 w-full rounded-xl bg-slate-200 px-6 py-3 font-semibold text-slate-900 transition hover:bg-white disabled:opacity-60"
             >
-              {t.formBtn}
+              {loading ? t.sendLoading : t.formBtn}
             </button>
+
+            {message && (
+              <p className="md:col-span-2 text-sm text-white">{message}</p>
+            )}
 
             <a
               href="#kontakt-form"
-              className="block w-full rounded-xl border border-white/10 bg-slate-900/35 px-6 py-3 text-center font-semibold text-white transition hover:bg-slate-900/55"
+              className="md:col-span-2 block w-full rounded-xl border border-white/10 bg-slate-900/35 px-6 py-3 text-center font-semibold text-white transition hover:bg-slate-900/55"
             >
               {t.formSecondaryCta}
             </a>
 
-            <p className="text-xs leading-6 text-slate-400">{t.formSecondaryText}</p>
+            <p className="md:col-span-2 text-xs leading-6 text-slate-400">
+              {t.formSecondaryText}
+            </p>
           </form>
         </div>
       </section>
@@ -549,69 +632,55 @@ export default function CapitalCryptoGermanyLanding() {
         </div>
       </section>
 
-<footer className="border-t border-white/10 bg-slate-900 py-12 text-sm text-slate-300">
-  <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+      <footer className="border-t border-white/10 bg-slate-900 py-12 text-sm text-slate-300">
+        <div className="mx-auto grid max-w-7xl gap-8 px-6 md:grid-cols-3">
+          <div>
+            <p className="mb-2 font-semibold text-white">CAPITAL CRYPTO GERMANY</p>
+            <p>
+              Blockchain analysis and advisory related to digital investment platforms.
+            </p>
+          </div>
 
-    <div>
-      <p className="font-semibold text-white mb-2">
-        CAPITAL CRYPTO GERMANY
-      </p>
-      <p>
-        Blockchain analysis and advisory related to digital investment platforms.
-      </p>
-    </div>
+          <div>
+            <p className="mb-2 font-semibold text-white">Contact</p>
+            <p>Email:</p>
+            <a
+              href="mailto:support@capitalcryptogermany.com"
+              className="text-amber-400 hover:text-amber-300"
+            >
+              support@capitalcryptogermany.com
+            </a>
+          </div>
 
-    <div>
-      <p className="font-semibold text-white mb-2">Contact</p>
+          <div>
+            <p className="mb-2 font-semibold text-white">Legal</p>
+            <div className="flex flex-col gap-2">
+              <a href="/privacy" className="hover:text-white">
+                Privacy Policy
+              </a>
+              <a href="/cookies" className="hover:text-white">
+                Cookies Policy
+              </a>
+              <a href="/contact" className="hover:text-white">
+                Contact
+              </a>
+            </div>
+          </div>
+        </div>
 
-      <p>Email:</p>
+        <div className="mt-10 text-center text-xs text-slate-400">
+          © 2026 Capital Crypto Germany. All rights reserved.
+        </div>
+      </footer>
 
       <a
-        href="mailto:support@capitalcryptogermany.com"
-        className="text-amber-400 hover:text-amber-300"
+        href="https://wa.me/4915783358244?text=Hallo%20ich%20ben%C3%B6tige%20eine%20Analyse%20zu%20meinem%20Krypto-Fall"
+        target="_blank"
+        rel="noreferrer"
+        className="fixed bottom-6 right-6 rounded-full bg-green-500 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105"
       >
-        support@capitalcryptogermany.com
+        {t.whatsapp}
       </a>
-
-    </div>
-
-    <div>
-      <p className="font-semibold text-white mb-2">Legal</p>
-
-      <div className="flex flex-col gap-2">
-
-        <a href="/privacy" className="hover:text-white">
-          Privacy Policy
-        </a>
-
-        <a href="/cookies" className="hover:text-white">
-          Cookies Policy
-        </a>
-
-        <a href="" className="hover:text-white">
-          Contact
-        </a>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <div className="text-center mt-10 text-xs text-slate-400">
-    © 2026 Capital Crypto Germany. All rights reserved.
-  </div>
-
-</footer>
-
-<a
-  href="https://wa.me/4915783358244?text=Hallo%20ich%20ben%C3%B6tige%20eine%20Analyse%20zu%20meinem%20Krypto-Fall"
-  target="_blank"
-  rel="noreferrer"
-  className="fixed bottom-6 right-6 rounded-full bg-green-500 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105"
->
-  {t.whatsapp}
-</a>
     </main>
   );
 }
