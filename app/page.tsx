@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type Language = 'de' | 'en';
 
@@ -234,6 +234,24 @@ export default function CapitalCryptoGermanyLanding() {
   const [lang, setLang] = useState<Language>('de');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
+const langMenuRef = useRef<HTMLDivElement | null>(null);
+
+useEffect(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      langMenuRef.current &&
+      !langMenuRef.current.contains(event.target as Node)
+    ) {
+      setLangMenuOpen(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, []);
 
   const t = translations[lang];
 
@@ -278,31 +296,33 @@ export default function CapitalCryptoGermanyLanding() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-black via-red-950 to-amber-700 text-white font-bold">
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-slate-900/70 backdrop-blur">
+    <main className="min-h-screen bg-gradient-to-b from-[#0B1020] via-[#11182D] to-[#141B34] text-white">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-900 backdrop-blur-lg">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-          <a href="/" className="flex items-center gap-2 transition hover:opacity-80">
-            <img
-              src="/favicon.png"
-              alt="Capital Crypto Germany"
-              className="h-7 w-7 object-contain"
-            />
-            <div className="leading-tight">
-              <p className="text-sm font-semibold tracking-wide text-white">
-                CAPITAL CRYPTO GERMANY
-              </p>
-              <p className="text-xs text-slate-300">{t.brandSub}</p>
-            </div>
+          <a href="/"
+  className="flex items-center gap-3 transition-transform duration-200 hover:scale-[1.02] active:scale-95"
+>
+  <img
+    src="/logo-capital-crypto-germany.png"
+    alt="Capital Crypto Germany"
+    className="h-6 w-6 rounded-xs object-cover"
+  />
+  <div>
+    <p className="text-xs font-semibold tracking-wide text-white">
+      CAPITAL CRYPTO GERMANY
+    </p>
+    <p className="text-xs text-slate-400">{t.brandSub}</p>
+  </div>
           </a>
 
           <nav className="hidden items-center gap-6 text-sm text-slate-200 md:flex">
-            <a href="#analyse" className="hover:text-white">
+            <a href="#analyse" className="hover:text-black">
               {t.nav1}
             </a>
-            <a href="#netzwerke" className="hover:text-white">
+            <a href="#netzwerke" className="hover:text-black">
               {t.nav2}
             </a>
-            <a href="#prozess" className="hover:text-white">
+            <a href="#prozess" className="hover:text-black">
               {t.nav3}
             </a>
             <a href="#faq" className="hover:text-white">
@@ -310,58 +330,71 @@ export default function CapitalCryptoGermanyLanding() {
             </a>
           </nav>
 
-          <a
-            href="#kontakt-form"
-            className="rounded-full bg-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-white"
-          >
-            {t.ctaTop}
-          </a>
+          <div className="flex items-center gap-3">
+  <div className="relative" ref={langMenuRef}>
+    <button
+      type="button"
+      onClick={() => setLangMenuOpen((prev) => !prev)}
+      className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+    >
+      <span>{lang === 'de' ? '🇩🇪' : '🇬🇧'}</span>
+      <span>{lang === 'de' ? 'DE' : 'EN'}</span>
+      <span className="text-xs opacity-80">▾</span>
+    </button>
+
+    {langMenuOpen && (
+      <div className="absolute right-0 top-12 z-50 min-w-[160px] rounded-2xl border border-white/10 bg-slate-950/95 p-2 shadow-2xl backdrop-blur-xl">
+        <button
+          type="button"
+          onClick={() => {
+            setLang('de');
+            setLangMenuOpen(false);
+          }}
+          className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm transition ${
+            lang === 'de'
+              ? 'bg-white text-slate-900'
+              : 'text-white hover:bg-white/10'
+          }`}
+        >
+          <span>🇩🇪</span>
+          <span>Deutsch</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            setLang('en');
+            setLangMenuOpen(false);
+          }}
+          className={`mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm transition ${
+            lang === 'en'
+              ? 'bg-white text-slate-900'
+              : 'text-white hover:bg-white/10'
+          }`}
+        >
+          <span>🇬🇧</span>
+          <span>English</span>
+        </button>
+      </div>
+    )}
+  </div>
+</div>
         </div>
       </header>
 
-      <aside className="fixed right-4 top-1/2 z-40 -translate-y-1/2 rounded-2xl border border-white/10 bg-slate-900/80 p-2 shadow-xl backdrop-blur">
-        <p className="px-2 pb-2 text-[11px] uppercase tracking-[0.18em] text-slate-400">
-          {t.langLabel}
-        </p>
-        <div className="flex flex-col gap-2">
-          <button
-            onClick={() => setLang('de')}
-            className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition ${
-              lang === 'de'
-                ? 'bg-slate-200 text-slate-900'
-                : 'bg-slate-800 text-slate-200 hover:bg-slate-700'
-            }`}
-          >
-            <span>🇩🇪</span>
-            DE
-          </button>
-          <button
-            onClick={() => setLang('en')}
-            className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition ${
-              lang === 'en'
-                ? 'bg-slate-200 text-slate-900'
-                : 'bg-slate-800 text-slate-200 hover:bg-slate-700'
-            }`}
-          >
-            <span>🇬🇧</span>
-            EN
-          </button>
-        </div>
-      </aside>
-
       <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8">
           <div className="max-w-3xl">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/40 px-4 py-2 text-sm text-slate-200 shadow-sm">
               <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
               {t.intakeBadge}
             </div>
 
-            <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
               {t.heroTitle}
             </h1>
 
-            <p className="mt-6 text-lg leading-8 text-slate-200">{t.heroText}</p>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">{t.heroText}</p>
 
             <div className="mt-8 flex flex-wrap gap-4">
               <a
@@ -381,21 +414,20 @@ export default function CapitalCryptoGermanyLanding() {
 
               <a
                 href="#prozess"
-                className="rounded-xl border border-white/20 px-6 py-4 font-semibold text-white transition hover:bg-white/10"
+                className="rounded-[24px] border border-white/10 bg-white/[0.04] backdrop-blur-sm"
               >
                 {t.heroBtn2}
               </a>
             </div>
           </div>
 
-          <div className="relative">
-            <div className="absolute -inset-6 rounded-[2rem] bg-white/5 blur-3xl" />
-            <img
-              src="/hero-capital-crypto-germany.png"
-              alt="Blockchain analysis dashboard"
-              className="relative w-full rounded-[2rem] border border-white/10 shadow-2xl shadow-black/30"
-            />
-          </div>
+          <div className="rounded-[28px] border border-white/10 bg-white/[0.05] p-6 shadow-2xl shadow-black/30 backdrop-blur-xl">
+  <img
+    src="/hero-capital-crypto-germany.png"
+    alt="Blockchain analysis dashboard"
+    className="w-full rounded-2xl border border-white/10 bg-[#0F172A]/80 px-4 py-3 text-white placeholder:text-slate-400 outline-none transition focus:border-[#6366F1]"
+  />
+</div>
         </div>
       </section>
 
@@ -584,7 +616,7 @@ export default function CapitalCryptoGermanyLanding() {
               rows={4}
               name="description"
               placeholder={t.formDesc}
-              className="md:col-span-2 w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-400 outline-none"
+              className="md:col-span-2 w-full rounded-2xl bg-[#4F46E5] px-6 py-3 font-semibold text-white transition hover:bg-[#6366F1] disabled:opacity-60"
             />
 
             <p className="md:col-span-2 text-xs leading-6 text-slate-400">
@@ -599,7 +631,7 @@ export default function CapitalCryptoGermanyLanding() {
 </button>
 
             {message && (
-              <p className="md:col-span-2 text-sm text-white">{message}</p>
+              <p className="md:col-span-2 text-sm text-[#A5B4FC]">{message}</p>
             )}
 
             <a
@@ -624,7 +656,7 @@ export default function CapitalCryptoGermanyLanding() {
             {t.faqs.map(([q, a]) => (
               <div
                 key={q}
-                className="rounded-2xl border border-white/10 bg-slate-900/35 p-6 shadow-sm"
+                className="rounded-2xl bg-[#4F46E5] px-6 py-3 font-semibold text-white transition hover:bg-[#6366F1]"
               >
                 <h3 className="font-semibold text-white">{q}</h3>
                 <p className="mt-2 text-sm text-slate-200">{a}</p>
@@ -634,49 +666,64 @@ export default function CapitalCryptoGermanyLanding() {
         </div>
       </section>
 
-      <footer className="border-t border-white/10 bg-slate-900 py-12 text-sm text-slate-300">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 md:grid-cols-3">
-          <div>
-            <p className="mb-2 font-semibold text-white">CAPITAL CRYPTO GERMANY</p>
-            <p>
-              Blockchain analysis and advisory related to digital investment platforms.
-            </p>
-          </div>
+      <footer className="font-semibold text-black mb-2">
 
-          <div>
-            <p className="mb-2 font-semibold text-white">Contact</p>
-            <p>Email:</p>
-            <a
-              href="mailto:support@capitalcryptogermany.com"
-              className="text-amber-400 hover:text-amber-300"
-            >
-              support@capitalcryptogermany.com
-            </a>
-          </div>
+  <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
 
-          <div>
-            <p className="mb-2 font-semibold text-white">Legal</p>
-            <div className="flex flex-col gap-2">
-              <a href="/privacy" className="hover:text-white">
-                Privacy Policy
-              </a>
-              <a href="/cookies" className="hover:text-white">
-                Cookies Policy
-              </a>
-              <a href="/contact" className="hover:text-white">
-                Contact
-              </a>
-            </div>
-          </div>
-        </div>
+    <div>
+      <p className="font-semibold text-slate-900 mb-2">
+        CAPITAL CRYPTO GERMANY
+      </p>
+      <p>
+        Blockchain analysis and advisory related to digital investment platforms.
+      </p>
+    </div>
 
-        <div className="mt-10 text-center text-xs text-slate-400">
-          © 2026 Capital Crypto Germany. All rights reserved.
-        </div>
-      </footer>
+    <div>
+      <p className="font-semibold text-slate-900 mb-2">Contact</p>
+
+      <p>Email:</p>
 
       <a
-        href="https://wa.me/4915783358244?text=Hallo%20ich%20ben%C3%B6tige%20eine%20Analyse%20zu%20meinem%20Krypto-Fall"
+        href="mailto:support@capitalcryptogermany.com"
+        className="text-blue-600 hover:text-blue-800"
+      >
+        support@capitalcryptogermany.com
+      </a>
+
+    </div>
+
+    <div>
+      <p className="font-semibold text-slate-900 mb-2">Legal</p>
+
+      <div className="flex flex-col gap-2">
+
+        <a href="/privacy" className="hover:text-slate-900">
+          Privacy Policy
+        </a>
+
+        <a href="/cookies" className="hover:text-slate-900">
+          Cookies Policy
+        </a>
+
+        <a href="/contact" className="hover:text-slate-900">
+          Contact
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div className="text-center mt-10 text-xs text-slate-600">
+    © 2026 Capital Crypto Germany. All rights reserved.
+  </div>
+
+</footer>
+
+      <a
+        href="https://wa.me/4915783358244?text=Für%20eine%20detaillierte%20Beratung%20hinterlassen%20Sie%20bitte%20eine%20passende%20Uhrzeit%20für%20einen%20Kontakt%20per%20E-Mail%20oder%20Telefon."
         target="_blank"
         rel="noreferrer"
         className="fixed bottom-6 right-6 rounded-full bg-green-500 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105"

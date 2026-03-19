@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
-import { supabaseAdmin } from '../../../lib/supabase-admin';
+import { getSupabaseAdmin } from '../../../lib/supabase-admin';
 
 export async function POST(req: Request) {
   try {
+    const supabaseAdmin = getSupabaseAdmin();
     const body = await req.json();
 
     const {
@@ -41,7 +42,7 @@ export async function POST(req: Request) {
     if (error) {
       console.error('SUPABASE INSERT ERROR:', error);
       return NextResponse.json(
-        { error: 'Failed to save lead.' },
+        { error: error.message || 'Failed to save lead.' },
         { status: 500 }
       );
     }
