@@ -1,6 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
 
 type Language = 'de' | 'en';
 
@@ -282,12 +287,24 @@ useEffect(() => {
       const data = await res.json();
 
       if (!res.ok) {
-        setMessage(data.error || t.sendError);
-        return;
-      }
+  setMessage(data.error || t.sendError);
+  return;
+}
 
-      setMessage(`${t.sendSuccess} Lead ID: ${data.leadId}`);
-      e.currentTarget.reset();
+// 🔥 META PIXEL LEAD
+if (typeof window !== "undefined" && window.fbq) {
+  window.fbq("track", "Lead");
+}
+
+// 📲 WHATSAPP REDIRECT
+const text = encodeURIComponent(
+  `Hallo, mein Name ist ${payload.name}. Ich habe gerade eine Anfrage über Ihre Website gesendet.`
+);
+
+window.location.href = `https://wa.me/4915783358244?text=${text}`;
+
+setMessage(`${t.sendSuccess} Lead ID: ${data.leadId}`);
+e.currentTarget.reset();
     } catch {
       setMessage(t.networkError);
     } finally {
