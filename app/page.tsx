@@ -756,7 +756,7 @@ e.currentTarget.reset();
             <button
   type="submit"
   disabled={loading}
-  className="md:col-span-2 w-full rounded-xl bg-amber-300 px-6 py-4 font-semibold text-slate-900 transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-60"
+  className="w-full rounded-xl bg-amber-300 px-6 py-4 font-semibold text-slate-900 transition hover:bg-amber-200 disabled:opacity-60"
 >
   {loading ? t.sendLoading : t.formBtn}
 </button>
@@ -767,12 +767,6 @@ e.currentTarget.reset();
   </div>
 )}
 
-            <a
-              href="#kontakt-form"
-              className="md:col-span-2 block w-full rounded-xl border border-white/10 bg-slate-900/35 px-6 py-3 text-center font-semibold text-white transition hover:bg-slate-900/55"
-            >
-              {t.formSecondaryCta}
-            </a>
 
             <p className="md:col-span-2 text-xs leading-6 text-slate-400">
               {t.formSecondaryText}
