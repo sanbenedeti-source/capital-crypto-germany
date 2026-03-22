@@ -814,7 +814,7 @@ e.currentTarget.reset();
             <button
   type="submit"
   disabled={loading}
-  className="w-full rounded-xl bg-amber-300 px-6 py-4 font-semibold text-slate-900 transition hover:bg-amber-200 disabled:opacity-60"
+  className="md:col-span-2 w-full rounded-xl bg-amber-300 px-6 py-4 font-semibold text-slate-900 transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-60"
 >
   {loading ? t.sendLoading : t.formBtn}
 </button>
