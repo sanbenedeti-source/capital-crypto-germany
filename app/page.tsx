@@ -653,6 +653,64 @@ e.currentTarget.reset();
             <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
             {t.intakeBadge}
           </div>
+          <section className="border-t border-white/10 px-6 py-20 lg:px-8">
+  <div className="mx-auto max-w-4xl">
+    <h2 className="text-3xl font-semibold text-white">
+      Häufige Fragen
+    </h2>
+
+    <div className="mt-10 space-y-4">
+
+      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-5">
+        <p className="font-semibold text-white">
+          Ist die erste Fallprüfung kostenlos?
+        </p>
+        <p className="mt-2 text-sm text-slate-300">
+          Ja. Die erste Fallprüfung dient der ersten Orientierung und hilft,
+          die Situation besser einzuordnen.
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-5">
+        <p className="font-semibold text-white">
+          Wie schnell erhalte ich eine Rückmeldung?
+        </p>
+        <p className="mt-2 text-sm text-slate-300">
+          In der Regel innerhalb von 24 bis 48 Stunden.
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-5">
+        <p className="font-semibold text-white">
+          Wird eine Rückgewinnung garantiert?
+        </p>
+        <p className="mt-2 text-sm text-slate-300">
+          Nein. Jeder Fall ist unterschiedlich und wird individuell geprüft.
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-5">
+        <p className="font-semibold text-white">
+          Was passiert nach dem Absenden?
+        </p>
+        <p className="mt-2 text-sm text-slate-300">
+          Ihr Fall wird geprüft und Sie erhalten eine Rückmeldung per E-Mail
+          oder Telefon.
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-5">
+        <p className="font-semibold text-white">
+          Sind meine Daten vertraulich?
+        </p>
+        <p className="mt-2 text-sm text-slate-300">
+          Ja. Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
 
           <h2 className="text-3xl font-semibold text-white">{t.formTitle}</h2>
 
@@ -760,64 +818,6 @@ e.currentTarget.reset();
 >
   {loading ? t.sendLoading : t.formBtn}
 </button>
-<section className="border-t border-white/10 px-6 py-20 lg:px-8">
-  <div className="mx-auto max-w-4xl">
-    <h2 className="text-3xl font-semibold text-white">
-      Häufige Fragen
-    </h2>
-
-    <div className="mt-10 space-y-4">
-
-      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-5">
-        <p className="font-semibold text-white">
-          Ist die erste Fallprüfung kostenlos?
-        </p>
-        <p className="mt-2 text-sm text-slate-300">
-          Ja. Die erste Fallprüfung dient der ersten Orientierung und hilft,
-          die Situation besser einzuordnen.
-        </p>
-      </div>
-
-      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-5">
-        <p className="font-semibold text-white">
-          Wie schnell erhalte ich eine Rückmeldung?
-        </p>
-        <p className="mt-2 text-sm text-slate-300">
-          In der Regel innerhalb von 24 bis 48 Stunden.
-        </p>
-      </div>
-
-      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-5">
-        <p className="font-semibold text-white">
-          Wird eine Rückgewinnung garantiert?
-        </p>
-        <p className="mt-2 text-sm text-slate-300">
-          Nein. Jeder Fall ist unterschiedlich und wird individuell geprüft.
-        </p>
-      </div>
-
-      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-5">
-        <p className="font-semibold text-white">
-          Was passiert nach dem Absenden?
-        </p>
-        <p className="mt-2 text-sm text-slate-300">
-          Ihr Fall wird geprüft und Sie erhalten eine Rückmeldung per E-Mail
-          oder Telefon.
-        </p>
-      </div>
-
-      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-5">
-        <p className="font-semibold text-white">
-          Sind meine Daten vertraulich?
-        </p>
-        <p className="mt-2 text-sm text-slate-300">
-          Ja. Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet.
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
 <div className="md:col-span-2 rounded-2xl border border-white/10 bg-slate-900/35 px-5 py-4 text-sm leading-6 text-slate-300">
   <p className="font-medium text-white">Wichtiger Hinweis</p>
   <p className="mt-2">
