@@ -497,7 +497,38 @@ e.currentTarget.reset();
           </div>
         </div>
       </section>
+<section className="px-6 py-16 lg:px-8">
+  <div className="mx-auto max-w-6xl grid gap-6 md:grid-cols-3">
 
+    <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6">
+      <h3 className="text-lg font-semibold text-white mb-2">
+        Strukturierte Analyse
+      </h3>
+      <p className="text-sm text-slate-300">
+        Detaillierte Auswertung von Wallet-Aktivitäten und Transaktionsverläufen.
+      </p>
+    </div>
+
+    <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6">
+      <h3 className="text-lg font-semibold text-white mb-2">
+        Mehrere Netzwerke
+      </h3>
+      <p className="text-sm text-slate-300">
+        Analyse über verschiedene Blockchain-Netzwerke hinweg.
+      </p>
+    </div>
+
+    <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6">
+      <h3 className="text-lg font-semibold text-white mb-2">
+        Schnelle Einschätzung
+      </h3>
+      <p className="text-sm text-slate-300">
+        Erste Rückmeldung innerhalb von 24–48 Stunden.
+      </p>
+    </div>
+
+  </div>
+</section>
       <section className="border-t border-white/10 bg-slate-800/25">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
           <h2 className="mb-6 text-3xl font-semibold text-white">
