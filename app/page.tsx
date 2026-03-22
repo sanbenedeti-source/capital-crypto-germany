@@ -77,6 +77,7 @@ const translations: Record<Language, Translation> = {
       'Analyse von Broker-Plattformen',
       'Untersuchung verdächtiger Transaktionsketten',
       'Dokumentation der Geldflüsse',
+
     ],
     section2Title: 'Unterstützte Blockchain-Netzwerke',
     section3Title: 'Unser Analyseprozess',
@@ -399,57 +400,69 @@ e.currentTarget.reset();
         </div>
       </header>
 
-      <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8">
-          <div className="max-w-3xl">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/40 px-4 py-2 text-sm text-slate-200 shadow-sm">
-              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
-              {t.intakeBadge}
-            </div>
+      <section className="px-6 py-20 lg:px-8">
+  <div className="mx-auto max-w-7xl grid gap-10 lg:grid-cols-2 items-center">
 
-            <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight">
-  Strukturierte Blockchain-Analyse bei verdächtigen Krypto-Transaktionen
-</h1>
+    {/* LEFT SIDE - TEXT */}
+    <div>
+      <h1 className="text-4xl font-semibold text-white">
+        Blockchain-Analyse für verdächtige Krypto-Transaktionen
+      </h1>
 
-            <p className="mt-4 text-lg text-slate-300 max-w-2xl">
-  Wir analysieren Wallet-Bewegungen, Transaktionsketten und Plattformangaben, 
-  um komplexe Krypto-Fälle strukturiert zu bewerten.
-</p>
+      <p className="mt-4 text-slate-300">
+        Wir analysieren Wallet-Bewegungen und helfen Ihnen, Ihre Situation besser zu verstehen.
+      </p>
+    </div>
 
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href="#kontakt-form"
-                className="inline-flex animate-pulse items-center gap-2 rounded-full border border-amber-300/40 bg-amber-300/15 px-5 py-3 text-sm font-semibold text-amber-100 shadow-lg shadow-amber-900/20 transition hover:scale-[1.02] hover:bg-amber-300/20"
-              >
-                <span>↓</span>
-                {t.intakeJump}
-              </a>
+    {/* RIGHT SIDE - FORM */}
+    <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6 shadow-xl">
 
-              <a
-                href="#kontakt-form"
-                className="rounded-xl bg-slate-200 px-6 py-4 font-semibold text-slate-900 transition hover:bg-white"
-              >
-                {t.heroBtn1}
-              </a>
+      <h3 className="text-lg font-semibold text-white mb-4">
+        Kostenlose Fallprüfung starten
+      </h3>
 
-              <a
-                href="#prozess"
-                className="rounded-[24px] border border-white/10 bg-white/[0.04] backdrop-blur-sm"
-              >
-                {t.heroBtn2}
-              </a>
-            </div>
-          </div>
+      <form onSubmit={handleSubmit} className="grid gap-4">
 
-          <div className="rounded-[28px] border border-white/10 bg-white/[0.05] p-6 shadow-2xl shadow-black/30 backdrop-blur-xl">
-  <img
-    src="/hero-capital-crypto-germany.png"
-    alt="Blockchain analysis dashboard"
-    className="w-full rounded-2xl border border-white/10 bg-[#0F172A]/80 px-4 py-3 text-white placeholder:text-slate-400 outline-none transition focus:border-[#6366F1]"
-  />
-</div>
-        </div>
-      </section>
+        <input
+          type="text"
+          name="name"
+          placeholder="Ihr Name"
+          className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white outline-none"
+        />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="E-Mail Adresse"
+          className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white outline-none"
+        />
+
+        <input
+          type="text"
+          name="phone"
+          placeholder="Telefonnummer"
+          className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white outline-none"
+        />
+
+        <textarea
+          name="description"
+          rows={4}
+          placeholder="Beschreiben Sie kurz Ihr Problem"
+          className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white outline-none"
+        />
+
+        <button
+          type="submit"
+          className="w-full rounded-xl bg-amber-300 px-6 py-3 font-semibold text-slate-900 hover:bg-amber-200"
+        >
+          Analyse starten
+        </button>
+
+      </form>
+    </div>
+
+  </div>
+</section>
 
       <section id="analyse" className="border-t border-white/10 bg-slate-800/35">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
