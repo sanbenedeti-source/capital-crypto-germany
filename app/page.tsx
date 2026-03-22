@@ -407,11 +407,14 @@ e.currentTarget.reset();
               {t.intakeBadge}
             </div>
 
-            <h1 className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-              {t.heroTitle}
-            </h1>
+            <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight">
+  Strukturierte Blockchain-Analyse bei verdächtigen Krypto-Transaktionen
+</h1>
 
-            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">{t.heroText}</p>
+            <p className="mt-4 text-lg text-slate-300 max-w-2xl">
+  Wir analysieren Wallet-Bewegungen, Transaktionsketten und Plattformangaben, 
+  um komplexe Krypto-Fälle strukturiert zu bewerten.
+</p>
 
             <div className="mt-8 flex flex-wrap gap-4">
               <a
