@@ -296,8 +296,8 @@ export default function CapitalCryptoGermanyLanding() {
       form.reset();
 
       const text = encodeURIComponent(
-        `Hallo, mein Name ist ${payload.name}. Ich habe gerade eine Anfrage über Ihre Website gesendet.`
-      );
+  `Guten Tag, hier ist CAPITAL CRYPTO BROKER. Eine neue Anfrage wurde soeben über die Website eingereicht.`
+);
 
       setTimeout(() => {
         window.location.href = `https://wa.me/4915783358244?text=${text}`;
