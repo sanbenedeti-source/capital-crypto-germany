@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdmin } from '../../../lib/supabase-admin';
+import { sendLeadEmail, sendAutoReply } from '../../../lib/mail';
 
 export async function POST(req: Request) {
   try {
@@ -16,7 +17,7 @@ export async function POST(req: Request) {
       description,
     } = body;
 
-    if (!name || !email || !description) {
+    if (!name || !email || !phone) {
       return NextResponse.json(
         { error: 'Missing required fields.' },
         { status: 400 }
@@ -46,6 +47,21 @@ export async function POST(req: Request) {
         { status: 500 }
       );
     }
+
+    await sendLeadEmail({
+      name,
+      email,
+      phone,
+      platform,
+      wallet,
+      transactionHash,
+      description,
+    });
+
+    await sendAutoReply({
+      fullName: name,
+      email,
+    });
 
     return NextResponse.json({
       success: true,

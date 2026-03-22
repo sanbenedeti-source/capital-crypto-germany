@@ -683,60 +683,51 @@ e.currentTarget.reset();
         </div>
       </section>
 
-      <footer className="font-semibold text-black mb-2">
-
-  <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-
+      <footer className="border-t border-white/10 bg-slate-950/90 text-slate-200">
+  <div className="mx-auto max-w-7xl px-6 py-12 grid gap-8 md:grid-cols-3">
     <div>
-      <p className="font-semibold text-slate-900 mb-2">
+      <p className="mb-2 font-semibold text-white">
         CAPITAL CRYPTO GERMANY
       </p>
-      <p>
+      <p className="text-sm leading-6 text-slate-300">
         Blockchain analysis and advisory related to digital investment platforms.
       </p>
     </div>
 
     <div>
-      <p className="font-semibold text-slate-900 mb-2">Contact</p>
-
-      <p>Email:</p>
+      <p className="mb-2 font-semibold text-white">Contact</p>
+      <p className="text-sm text-slate-300">Email:</p>
 
       <a
         href="mailto:support@capitalcryptogermany.com"
-        className="text-blue-600 hover:text-blue-800"
+        className="text-amber-300 transition hover:text-amber-200"
       >
         support@capitalcryptogermany.com
       </a>
-
     </div>
 
     <div>
-      <p className="font-semibold text-slate-900 mb-2">Legal</p>
+      <p className="mb-2 font-semibold text-white">Legal</p>
 
-      <div className="flex flex-col gap-2">
-
-        <a href="/privacy" className="hover:text-slate-900">
+      <div className="flex flex-col gap-2 text-sm">
+        <a href="/privacy" className="text-slate-300 transition hover:text-white">
           Privacy Policy
         </a>
 
-        <a href="/cookies" className="hover:text-slate-900">
+        <a href="/cookies" className="text-slate-300 transition hover:text-white">
           Cookies Policy
         </a>
 
-        <a href="/contact" className="hover:text-slate-900">
+        <a href="/contact" className="text-slate-300 transition hover:text-white">
           Contact
         </a>
-
       </div>
-
     </div>
-
   </div>
 
-  <div className="text-center mt-10 text-xs text-slate-600">
+  <div className="border-t border-white/10 px-6 py-4 text-center text-xs text-slate-400">
     © 2026 Capital Crypto Germany. All rights reserved.
   </div>
-
 </footer>
 
       <a
