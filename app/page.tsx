@@ -501,14 +501,16 @@ e.currentTarget.reset();
   <div className="mx-auto max-w-6xl grid gap-6 md:grid-cols-3">
 
     <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6">
-      <h3 className="text-lg font-semibold text-white mb-2">
-        Strukturierte Analyse
-      </h3>
-      <p className="text-sm text-slate-300">
-        Detaillierte Auswertung von Wallet-Aktivitäten und Transaktionsverläufen.
-      </p>
-    </div>
-
+  <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-amber-300/15 text-lg text-amber-300">
+    🔎
+  </div>
+  <h3 className="text-lg font-semibold text-white">
+    Strukturierte Analyse
+  </h3>
+  <p className="mt-2 text-sm text-slate-300">
+    Detaillierte Auswertung von Wallet-Aktivitäten und Transaktionsverläufen.
+  </p>
+</div>
     <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6">
       <h3 className="text-lg font-semibold text-white mb-2">
         Mehrere Netzwerke
@@ -519,13 +521,16 @@ e.currentTarget.reset();
     </div>
 
     <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6">
-      <h3 className="text-lg font-semibold text-white mb-2">
-        Schnelle Einschätzung
-      </h3>
-      <p className="text-sm text-slate-300">
-        Erste Rückmeldung innerhalb von 24–48 Stunden.
-      </p>
-    </div>
+  <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-amber-300/15 text-lg text-amber-300">
+    ⚡
+  </div>
+  <h3 className="text-lg font-semibold text-white">
+    Schnelle Einschätzung
+  </h3>
+  <p className="mt-2 text-sm text-slate-300">
+    Erste Rückmeldung innerhalb von 24–48 Stunden.
+  </p>
+</div>
 
   </div>
 </section>
@@ -857,6 +862,48 @@ e.currentTarget.reset();
           </div>
         </div>
       </section>
+      <section className="border-t border-white/10 bg-slate-800/25 px-6 py-20 lg:px-8">
+  <div className="mx-auto max-w-6xl">
+    <div className="max-w-2xl">
+      <h2 className="text-3xl font-semibold text-white">
+        Warum Capital Crypto Germany?
+      </h2>
+      <p className="mt-4 text-slate-300">
+        Unsere Arbeit konzentriert sich auf strukturierte Blockchain-Analysen,
+        nachvollziehbare Fallprüfung und eine klare erste Einschätzung Ihrer Situation.
+      </p>
+    </div>
+
+    <div className="mt-10 grid gap-6 md:grid-cols-3">
+      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6">
+        <h3 className="text-lg font-semibold text-white">
+          Strukturierte Fallprüfung
+        </h3>
+        <p className="mt-2 text-sm leading-6 text-slate-300">
+          Jede Anfrage wird auf Basis der übermittelten Angaben geordnet und nachvollziehbar geprüft.
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6">
+        <h3 className="text-lg font-semibold text-white">
+          Fokus auf Blockchain-Daten
+        </h3>
+        <p className="mt-2 text-sm leading-6 text-slate-300">
+          Wallet-Bewegungen, Transaktionsketten und Plattformangaben werden strukturiert ausgewertet.
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6">
+        <h3 className="text-lg font-semibold text-white">
+          Klare Rückmeldung
+        </h3>
+        <p className="mt-2 text-sm leading-6 text-slate-300">
+          Sie erhalten eine erste Einschätzung und eine klare Orientierung zu möglichen nächsten Schritten.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
       <footer className="border-t border-white/10 bg-slate-950/90 text-slate-200">
   <div className="mx-auto max-w-7xl px-6 py-12 grid gap-8 md:grid-cols-3">
