@@ -664,55 +664,90 @@ e.currentTarget.reset();
               {t.intakeIntro}
             </p>
 
-            <input
-              type="text"
-              name="name"
-              placeholder={t.formName}
-              className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-400 outline-none"
-            />
+            <div className="md:col-span-1">
+  <label className="mb-2 block text-sm font-medium text-slate-200">
+    {t.formName}
+  </label>
+  <input
+    type="text"
+    name="name"
+    placeholder={t.formName}
+    className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-amber-300"
+  />
+</div>
 
-            <input
-              type="email"
-              name="email"
-              placeholder={t.formEmail}
-              className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-400 outline-none"
-            />
+            <div className="md:col-span-1">
+  <label className="mb-2 block text-sm font-medium text-slate-200">
+    {t.formEmail}
+  </label>
+  <input
+    type="email"
+    name="email"
+    placeholder={t.formEmail}
+    className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-amber-300"
+  />
+</div>
 
-            <input
-              type="text"
-              name="phone"
-              placeholder={t.formPhone}
-              required
-              className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-400 outline-none"
-            />
+            <div className="md:col-span-1">
+  <label className="mb-2 block text-sm font-medium text-slate-200">
+    {t.formPhone}
+  </label>
+  <input
+    type="text"
+    name="phone"
+    placeholder={t.formPhone}
+    required
+    className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-amber-300"
+  />
+</div>
 
-            <input
-              type="text"
-              name="platform"
-              placeholder={t.formPlatform}
-              className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-400 outline-none"
-            />
+            <div className="md:col-span-1">
+  <label className="mb-2 block text-sm font-medium text-slate-200">
+    {t.formPlatform}
+  </label>
+  <input
+    type="text"
+    name="platform"
+    placeholder={t.formPlatform}
+    className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-amber-300"
+  />
+</div>
 
-            <input
-              type="text"
-              name="wallet"
-              placeholder={t.formWallet}
-              className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-400 outline-none"
-            />
+            <div className="md:col-span-1">
+  <label className="mb-2 block text-sm font-medium text-slate-200">
+    {t.formWallet}
+  </label>
+  <input
+    type="text"
+    name="wallet"
+    placeholder={t.formWallet}
+    className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-amber-300"
+  />
+</div>
 
-            <input
-              type="text"
-              name="transactionHash"
-              placeholder={t.formTx}
-              className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-400 outline-none"
-            />
+            <div className="md:col-span-1">
+  <label className="mb-2 block text-sm font-medium text-slate-200">
+    {t.formTx}
+  </label>
+  <input
+    type="text"
+    name="transactionHash"
+    placeholder={t.formTx}
+    className="w-full rounded-xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-amber-300"
+  />
+</div>
 
-            <textarea
-              rows={4}
-              name="description"
-              placeholder={t.formDesc}
-              className="md:col-span-2 w-full rounded-2xl bg-[#4F46E5] px-6 py-3 font-semibold text-white transition hover:bg-[#6366F1] disabled:opacity-60"
-            />
+            <div className="md:col-span-2">
+  <label className="mb-2 block text-sm font-medium text-slate-200">
+    {t.formDesc}
+  </label>
+  <textarea
+    rows={5}
+    name="description"
+    placeholder={t.formDesc}
+    className="w-full rounded-2xl border border-white/10 bg-slate-900/45 px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-amber-300"
+  />
+</div>
 
             <p className="md:col-span-2 text-xs leading-6 text-slate-400">
               {t.formNote}
@@ -720,14 +755,17 @@ e.currentTarget.reset();
 
             <button
   type="submit"
-  className="w-full rounded-xl bg-slate-200 px-6 py-3 font-semibold text-slate-900"
+  disabled={loading}
+  className="md:col-span-2 w-full rounded-xl bg-amber-300 px-6 py-4 font-semibold text-slate-900 transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-60"
 >
-  {t.formBtn}
+  {loading ? t.sendLoading : t.formBtn}
 </button>
 
             {message && (
-              <p className="md:col-span-2 text-sm text-[#A5B4FC]">{message}</p>
-            )}
+  <div className="md:col-span-2 rounded-xl border border-white/10 bg-slate-900/50 px-4 py-3 text-sm text-slate-200">
+    {message}
+  </div>
+)}
 
             <a
               href="#kontakt-form"
