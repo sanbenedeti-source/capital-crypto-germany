@@ -582,6 +582,50 @@ e.currentTarget.reset();
           </div>
         </div>
       </section>
+      <section className="border-t border-white/10 bg-slate-800/30 px-6 py-20 lg:px-8">
+  <div className="mx-auto max-w-6xl">
+    <div className="max-w-2xl">
+      <h2 className="text-3xl font-semibold text-white">
+        Wie es weitergeht
+      </h2>
+      <p className="mt-4 text-slate-300">
+        Nach dem Absenden Ihrer Anfrage erfolgt eine erste strukturierte Prüfung Ihres Falls.
+      </p>
+    </div>
+
+    <div className="mt-10 grid gap-6 md:grid-cols-3">
+      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6">
+        <p className="text-sm font-semibold text-amber-300">01</p>
+        <h3 className="mt-2 text-lg font-semibold text-white">
+          Anfrage absenden
+        </h3>
+        <p className="mt-2 text-sm leading-6 text-slate-300">
+          Sie übermitteln die wichtigsten Angaben zu Ihrer Situation über das Formular.
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6">
+        <p className="text-sm font-semibold text-amber-300">02</p>
+        <h3 className="mt-2 text-lg font-semibold text-white">
+          Erste Fallprüfung
+        </h3>
+        <p className="mt-2 text-sm leading-6 text-slate-300">
+          Ihr Fall wird anhand der übermittelten Informationen vorläufig eingeordnet.
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6">
+        <p className="text-sm font-semibold text-amber-300">03</p>
+        <h3 className="mt-2 text-lg font-semibold text-white">
+          Rückmeldung
+        </h3>
+        <p className="mt-2 text-sm leading-6 text-slate-300">
+          Sie erhalten eine Rückmeldung per E-Mail oder Telefon mit den möglichen nächsten Schritten.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
       <section id="prozess" className="border-t border-white/10 bg-slate-800/35">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
