@@ -13,8 +13,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de">
-      <body className="antialiased">
+<html lang="de">
+  <head>
+    <Script
+      src="https://www.googletagmanager.com/gtag/js?id=AW-18036682227"
+      strategy="afterInteractive"
+    />
+    <Script id="google-ads" strategy="afterInteractive">
+  {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-18036682227');
+  `}
+</Script>
+  </head>
+
+  <body className="antialiased">
         <Script
           id="meta-pixel"
           strategy="beforeInteractive"

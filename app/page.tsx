@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
+    gtag?: (...args: unknown[]) => void;
   }
 }
 
@@ -288,10 +289,17 @@ export default function CapitalCryptoGermanyLanding() {
         return;
       }
 
-      if (typeof window !== 'undefined' && window.fbq) {
-        window.fbq('track', 'Lead');
-      }
+if (typeof window !== 'undefined' && window.fbq) {
+  window.fbq('track', 'Lead');
+}
 
+if (typeof window !== 'undefined' && window.gtag) {
+  window.gtag('event', 'conversion', {
+    send_to: 'AW-18036682227/TEY7CJuY2o4cEPPbx5hD',
+    value: 1.0,
+    currency: 'USD',
+  });
+}
       setMessage(`${t.sendSuccess} Lead ID: ${data.leadId}`);
       form.reset();
 
@@ -300,7 +308,7 @@ export default function CapitalCryptoGermanyLanding() {
 );
 
       setTimeout(() => {
-        window.location.href = `https://wa.me/4915783358244?text=${text}`;
+        window.location.href = `https://wa.me/4915212289889?text=${text}`;
       }, 300);
     } catch {
       setMessage(t.networkError);
