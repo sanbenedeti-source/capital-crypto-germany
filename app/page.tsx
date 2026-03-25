@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+import TradingViewChart from "./components/TradingViewChart";
+
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
@@ -300,6 +302,7 @@ function TradingViewChart() {
     </section>
   );
 }
+
 
 export default function CapitalCryptoGermanyLanding() {
   const [lang, setLang] = useState<Language>('de');
