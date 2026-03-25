@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import TradingViewChart from "./components/TradingViewChart";
 
 declare global {
   interface Window {
@@ -556,7 +557,8 @@ if (typeof window !== 'undefined' && window.gtag) {
                   {message}
                 </div>
               )}
-import TradingViewChart from "./components/TradingViewChart";
+
+
               <div className="md:col-span-2 rounded-2xl border border-white/10 bg-[#0B0F19] px-5 py-4 text-sm leading-6 text-slate-300">
                 <p className="font-medium text-white">Wichtiger Hinweis</p>
                 <p className="mt-2">
@@ -569,7 +571,9 @@ import TradingViewChart from "./components/TradingViewChart";
           </div>
         </div>
       </section>
-
+<div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+  <TradingViewChart />
+</div>
       <section id="analyse" className="border-t border-white/10 bg-[#0F172A]">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
           <div className="max-w-2xl">

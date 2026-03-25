@@ -10,11 +10,22 @@ export default function TradingViewChart() {
 
     containerRef.current.innerHTML = "";
 
+    const widgetContainer = document.createElement("div");
+    widgetContainer.className = "tradingview-widget-container";
+    widgetContainer.style.height = "100%";
+    widgetContainer.style.width = "100%";
+
+    const widget = document.createElement("div");
+    widget.className = "tradingview-widget-container__widget";
+    widget.style.height = "100%";
+    widget.style.width = "100%";
+
     const script = document.createElement("script");
-    script.src =
-      "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
     script.type = "text/javascript";
     script.async = true;
+    script.src =
+      "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+
     script.innerHTML = JSON.stringify({
       autosize: true,
       symbol: "BINANCE:BTCUSDT",
@@ -38,32 +49,23 @@ export default function TradingViewChart() {
       withdateranges: false,
       compareSymbols: [],
       studies: [],
-      container_id: "tradingview_chart"
     });
 
-    const wrapper = document.createElement("div");
-    wrapper.className = "tradingview-widget-container";
-    wrapper.style.height = "100%";
-    wrapper.style.width = "100%";
-
-    const chart = document.createElement("div");
-    chart.id = "tradingview_chart";
-    chart.style.height = "100%";
-    chart.style.width = "100%";
-
-    wrapper.appendChild(chart);
-    wrapper.appendChild(script);
-    containerRef.current.appendChild(wrapper);
+    widgetContainer.appendChild(widget);
+    widgetContainer.appendChild(script);
+    containerRef.current.appendChild(widgetContainer);
   }, []);
 
   return (
-    <section className="mt-12 w-full rounded-2xl border border-white/10 bg-black/30 p-4 md:p-6">
-      <h2 className="mb-2 text-2xl font-bold text-white">
-        Live Crypto Market Overview
-      </h2>
-      <p className="mb-4 text-sm text-gray-300">
-        Follow real-time cryptocurrency price action and market movement.
-      </p>
+    <section className="w-full rounded-2xl border border-white/10 bg-black/30 p-4 md:p-6">
+      <div className="mb-4">
+        <h2 className="text-2xl font-bold text-white">
+          Live Crypto Market Overview
+        </h2>
+        <p className="mt-2 text-sm text-gray-300">
+          Follow real-time cryptocurrency price action and market movement.
+        </p>
+      </div>
 
       <div className="h-[500px] w-full overflow-hidden rounded-xl">
         <div ref={containerRef} className="h-full w-full" />
