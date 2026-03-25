@@ -556,7 +556,7 @@ if (typeof window !== 'undefined' && window.gtag) {
                   {message}
                 </div>
               )}
-
+import TradingViewChart from "./components/TradingViewChart";
               <div className="md:col-span-2 rounded-2xl border border-white/10 bg-[#0B0F19] px-5 py-4 text-sm leading-6 text-slate-300">
                 <p className="font-medium text-white">Wichtiger Hinweis</p>
                 <p className="mt-2">
