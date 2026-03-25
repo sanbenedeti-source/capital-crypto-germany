@@ -3,35 +3,17 @@
 import { useEffect, useRef } from "react";
 
 export default function TradingViewChart() {
-  const container = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!container.current) return;
+    if (!containerRef.current) return;
 
-    container.current.innerHTML = "";
-
-    const widgetContainer = document.createElement("div");
-    widgetContainer.className = "tradingview-widget-container";
-    widgetContainer.style.height = "100%";
-    widgetContainer.style.width = "100%";
-
-    const widget = document.createElement("div");
-    widget.className = "tradingview-widget-container__widget";
-    widget.style.height = "calc(100% - 32px)";
-    widget.style.width = "100%";
-
-    const copyright = document.createElement("div");
-    copyright.className = "tradingview-widget-copyright";
-    copyright.innerHTML = `
-      <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-        <span class="blue-text">Track all markets on TradingView</span>
-      </a>
-    `;
+    containerRef.current.innerHTML = "";
 
     const script = document.createElement("script");
-    script.type = "text/javascript";
     script.src =
       "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+    script.type = "text/javascript";
     script.async = true;
     script.innerHTML = JSON.stringify({
       autosize: true,
@@ -56,27 +38,35 @@ export default function TradingViewChart() {
       withdateranges: false,
       compareSymbols: [],
       studies: [],
+      container_id: "tradingview_chart"
     });
 
-    widgetContainer.appendChild(widget);
-    widgetContainer.appendChild(copyright);
-    widgetContainer.appendChild(script);
-    container.current.appendChild(widgetContainer);
+    const wrapper = document.createElement("div");
+    wrapper.className = "tradingview-widget-container";
+    wrapper.style.height = "100%";
+    wrapper.style.width = "100%";
+
+    const chart = document.createElement("div");
+    chart.id = "tradingview_chart";
+    chart.style.height = "100%";
+    chart.style.width = "100%";
+
+    wrapper.appendChild(chart);
+    wrapper.appendChild(script);
+    containerRef.current.appendChild(wrapper);
   }, []);
 
   return (
-    <section className="w-full rounded-2xl border border-white/10 bg-black/30 p-4 md:p-6">
-      <div className="mb-4">
-        <h2 className="text-2xl font-bold text-white">
-          Live Crypto Market Overview
-        </h2>
-        <p className="mt-2 text-sm text-gray-300">
-          Follow real-time cryptocurrency price action and market movement.
-        </p>
-      </div>
+    <section className="mt-12 w-full rounded-2xl border border-white/10 bg-black/30 p-4 md:p-6">
+      <h2 className="mb-2 text-2xl font-bold text-white">
+        Live Crypto Market Overview
+      </h2>
+      <p className="mb-4 text-sm text-gray-300">
+        Follow real-time cryptocurrency price action and market movement.
+      </p>
 
       <div className="h-[500px] w-full overflow-hidden rounded-xl">
-        <div ref={container} className="h-full w-full" />
+        <div ref={containerRef} className="h-full w-full" />
       </div>
     </section>
   );
