@@ -1,13 +1,11 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-
-import TradingViewChart from "./components/TradingViewChart";
 
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
-    gtag?: (...args: unknown[]) => void;
   }
 }
 
@@ -20,13 +18,11 @@ type Translation = {
   nav3: string;
   nav4: string;
   ctaTop: string;
+  heroBadge: string;
   heroTitle: string;
   heroText: string;
   heroBtn1: string;
   heroBtn2: string;
-  langLabel: string;
-  intakeBadge: string;
-  intakeJump: string;
   section1Title: string;
   section1Text: string;
   items1: string[];
@@ -34,6 +30,7 @@ type Translation = {
   section3Title: string;
   steps: [string, string][];
   formTitle: string;
+  formIntro: string;
   formName: string;
   formEmail: string;
   formPhone: string;
@@ -41,11 +38,12 @@ type Translation = {
   formWallet: string;
   formTx: string;
   formDesc: string;
-  formBtn: string;
-  intakeIntro: string;
   formNote: string;
+  formBtn: string;
   faqTitle: string;
   faqs: [string, string][];
+  importantTitle: string;
+  importantText: string;
   whatsapp: string;
   sendLoading: string;
   sendSuccess: string;
@@ -61,14 +59,13 @@ const translations: Record<Language, Translation> = {
     nav3: 'Ablauf',
     nav4: 'FAQ',
     ctaTop: 'Kostenlose Analyse',
-    heroTitle: 'Strukturierte Blockchain-Analyse bei verdächtigen Krypto-Transaktionen',
+    heroBadge: 'Blockchain Analyse',
+    heroTitle:
+      'Strukturierte Blockchain-Analyse bei verdächtigen Krypto-Transaktionen',
     heroText:
       'Wir analysieren Wallet-Bewegungen, Transaktionsketten und Plattformangaben, um komplexe Krypto-Fälle strukturiert zu bewerten.',
     heroBtn1: 'Fallprüfung starten',
     heroBtn2: 'Mehr über den Ablauf',
-    langLabel: 'Sprache',
-    intakeBadge: 'Fallprüfung',
-    intakeJump: 'Zur Fallprüfung',
     section1Title: 'Was wir analysieren',
     section1Text:
       'Blockchain-Transaktionen können komplexe Geldflüsse enthalten. Unsere Analyse konzentriert sich auf die Nachverfolgung von Wallet-Transfers und die strukturierte Darstellung der Transaktionshistorie.',
@@ -88,18 +85,19 @@ const translations: Record<Language, Translation> = {
       ['03', 'Strukturierter Analysebericht'],
     ],
     formTitle: 'Kostenlose Fallprüfung (Krypto-Recovery Analyse)',
+    formIntro:
+      'Nutzen Sie dieses Formular, um Ihren Fall kurz zu schildern. Die erste Fallprüfung dient der Orientierung und hilft zu verstehen, ob eine weiterführende Analyse sinnvoll sein könnte.',
     formName: 'Ihr Name',
     formEmail: 'E-Mail Adresse',
     formPhone: 'Telefonnummer',
     formPlatform: 'Name der Plattform oder des Brokers',
     formWallet: 'Wallet-Adresse (optional)',
     formTx: 'Transaktions-ID / Hash (optional)',
-    formDesc: 'Beschreiben Sie kurz Ihr Problem oder den verlorenen Krypto-Fall',
-    formBtn: 'Fall zur Prüfung senden',
-    intakeIntro:
-      'Nutzen Sie dieses Formular, um Ihren Fall kurz zu schildern. Die erste Fallprüfung dient der Orientierung und hilft zu verstehen, ob eine weiterführende Analyse sinnvoll sein könnte.',
+    formDesc:
+      'Beschreiben Sie kurz Ihr Problem oder den verlorenen Krypto-Fall',
     formNote:
       'Für eine bessere erste Einschätzung können Sie Plattformname, Wallet-Adresse, Transaktionsdaten und eine kurze Beschreibung des Problems angeben.',
+    formBtn: 'Fall zur Prüfung senden',
     faqTitle: 'Häufige Fragen',
     faqs: [
       [
@@ -119,6 +117,9 @@ const translations: Record<Language, Translation> = {
         'Ihr Fall wird geprüft und Sie erhalten eine Rückmeldung per E-Mail oder Telefon.',
       ],
     ],
+    importantTitle: 'Wichtiger Hinweis',
+    importantText:
+      'Es wird keine Rückgewinnung von Vermögenswerten garantiert. Jede Anfrage wird individuell geprüft. Die erste Fallprüfung dient der Orientierung und ersetzt keine rechtliche oder finanzielle Beratung.',
     whatsapp: 'WhatsApp',
     sendLoading: 'Wird gesendet...',
     sendSuccess: 'Fall erfolgreich gesendet.',
@@ -132,14 +133,13 @@ const translations: Record<Language, Translation> = {
     nav3: 'Process',
     nav4: 'FAQ',
     ctaTop: 'Free Analysis',
-    heroTitle: 'Structured Blockchain Analysis for Suspicious Crypto Transactions',
+    heroBadge: 'Blockchain Analysis',
+    heroTitle:
+      'Structured Blockchain Analysis for Suspicious Crypto Transactions',
     heroText:
       'We analyze wallet movements, transaction chains, and platform details to assess complex crypto-related cases in a structured way.',
     heroBtn1: 'Start Case Review',
-    heroBtn2: 'How it works',
-    langLabel: 'Language',
-    intakeBadge: 'Case Review',
-    intakeJump: 'Go to Case Review',
+    heroBtn2: 'Learn more about the process',
     section1Title: 'What We Analyze',
     section1Text:
       'Blockchain transactions may involve complex fund flows. Our review focuses on tracing wallet transfers and presenting transaction history in a structured way.',
@@ -159,18 +159,18 @@ const translations: Record<Language, Translation> = {
       ['03', 'Structured analysis report'],
     ],
     formTitle: 'Free Case Review (Crypto Recovery Analysis)',
-    formName: 'Your name',
-    formEmail: 'Email address',
-    formPhone: 'Phone number',
-    formPlatform: 'Name of the platform or broker',
-    formWallet: 'Wallet address (optional)',
-    formTx: 'Transaction ID / hash (optional)',
-    formDesc: 'Briefly describe your issue or lost crypto case',
-    formBtn: 'Submit case for review',
-    intakeIntro:
+    formIntro:
       'Use this form to briefly describe your case. The initial case review is intended to provide direction and help determine whether further analysis may be appropriate.',
+    formName: 'Your Name',
+    formEmail: 'Email Address',
+    formPhone: 'Phone Number',
+    formPlatform: 'Name of the platform or broker',
+    formWallet: 'Wallet Address (optional)',
+    formTx: 'Transaction ID / Hash (optional)',
+    formDesc: 'Briefly describe your issue or lost crypto case',
     formNote:
       'For a better initial review, you may include the platform name, wallet address, transaction details, and a short description of the issue.',
+    formBtn: 'Submit case for review',
     faqTitle: 'Frequently Asked Questions',
     faqs: [
       [
@@ -190,6 +190,9 @@ const translations: Record<Language, Translation> = {
         'Your case is reviewed first and you will receive a response by email or phone.',
       ],
     ],
+    importantTitle: 'Important Notice',
+    importantText:
+      'No recovery of assets is guaranteed. Every request is reviewed individually. This initial case review is for orientation only and does not replace legal or financial advice.',
     whatsapp: 'WhatsApp',
     sendLoading: 'Sending...',
     sendSuccess: 'Case submitted successfully.',
@@ -231,80 +234,7 @@ const chains = [
   },
 ];
 
-function TradingViewChart() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    containerRef.current.innerHTML = "";
-
-    const widgetContainer = document.createElement("div");
-    widgetContainer.className = "tradingview-widget-container";
-    widgetContainer.style.height = "100%";
-    widgetContainer.style.width = "100%";
-
-    const widget = document.createElement("div");
-    widget.className = "tradingview-widget-container__widget";
-    widget.style.height = "100%";
-    widget.style.width = "100%";
-
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.async = true;
-    script.src =
-      "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
-
-    script.innerHTML = JSON.stringify({
-      autosize: true,
-      symbol: "BINANCE:BTCUSDT",
-      interval: "D",
-      timezone: "Etc/UTC",
-      theme: "dark",
-      style: "1",
-      locale: "en",
-      allow_symbol_change: true,
-      calendar: false,
-      details: false,
-      hide_side_toolbar: true,
-      hide_top_toolbar: false,
-      hide_legend: false,
-      hide_volume: false,
-      hotlist: false,
-      save_image: true,
-      backgroundColor: "#0F0F0F",
-      gridColor: "rgba(242, 242, 242, 0.06)",
-      watchlist: ["BINANCE:BTCUSDT", "BINANCE:ETHUSDT", "BINANCE:BNBUSDT"],
-      withdateranges: false,
-      compareSymbols: [],
-      studies: [],
-    });
-
-    widgetContainer.appendChild(widget);
-    widgetContainer.appendChild(script);
-    containerRef.current.appendChild(widgetContainer);
-  }, []);
-
-  return (
-    <section className="w-full rounded-2xl border border-white/10 bg-black/30 p-4 md:p-6">
-      <div className="mb-4">
-        <h2 className="text-2xl font-bold text-white">
-          Live Crypto Market Overview
-        </h2>
-        <p className="mt-2 text-sm text-gray-300">
-          Follow real-time cryptocurrency price action and market movement.
-        </p>
-      </div>
-
-      <div className="h-[500px] w-full overflow-hidden rounded-xl">
-        <div ref={containerRef} className="h-full w-full" />
-      </div>
-    </section>
-  );
-}
-
-
-export default function CapitalCryptoGermanyLanding() {
+export default function HomePage() {
   const [lang, setLang] = useState<Language>('de');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -364,26 +294,19 @@ export default function CapitalCryptoGermanyLanding() {
         return;
       }
 
-if (typeof window !== 'undefined' && window.fbq) {
-  window.fbq('track', 'Lead');
-}
+      if (typeof window !== 'undefined' && window.fbq) {
+        window.fbq('track', 'Lead');
+      }
 
-if (typeof window !== 'undefined' && window.gtag) {
-  window.gtag('event', 'conversion', {
-    send_to: 'AW-18036682227/TEY7CJuY2o4cEPPbx5hD',
-    value: 1.0,
-    currency: 'USD',
-  });
-}
       setMessage(`${t.sendSuccess} Lead ID: ${data.leadId}`);
       form.reset();
 
       const text = encodeURIComponent(
-  `Guten Tag, hier ist CAPITAL CRYPTO BROKER. Eine neue Anfrage wurde soeben über die Website eingereicht.`
-);
+        'Guten Tag, hier ist CAPITAL CRYPTO BROKER. Eine neue Anfrage wurde soeben über die Website eingereicht.'
+      );
 
       setTimeout(() => {
-        window.location.href = `https://wa.me/4915212289889?text=${text}`;
+        window.location.href = `https://wa.me/4915783358244?text=${text}`;
       }, 300);
     } catch {
       setMessage(t.networkError);
@@ -393,69 +316,72 @@ if (typeof window !== 'undefined' && window.gtag) {
   };
 
   return (
-    <main className="min-h-screen bg-[#0B0F19] text-white">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0B0F19]/90 backdrop-blur-lg">
+    <main className="min-h-screen bg-[#020817] text-white">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#020817]/90 backdrop-blur-lg">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-          <a
-            href="/"
-            className="flex items-center gap-3 transition-transform duration-200 hover:scale-[1.02] active:scale-95"
-          >
+          <Link href="/" className="flex items-center gap-3">
             <img
               src="/logo-capital-crypto-germany.png"
               alt="Capital Crypto Germany"
-              className="h-6 w-6 object-cover"
+              className="h-8 w-8 object-contain"
             />
-            <div>
-              <p className="text-xs font-semibold tracking-wide text-white">
+            <div className="leading-tight">
+              <p className="text-sm font-semibold tracking-wide text-white">
                 CAPITAL CRYPTO GERMANY
               </p>
-              <p className="text-xs text-slate-400">{t.brandSub}</p>
+              <p className="text-xs text-slate-300">{t.brandSub}</p>
             </div>
-          </a>
+          </Link>
 
-          <nav className="hidden items-center gap-6 text-sm text-slate-200 md:flex">
-            <a href="#analyse" className="transition hover:text-[#FCD34D]">
+          <nav className="hidden items-center gap-8 text-sm font-medium text-white md:flex">
+            <Link href="/fallanalyse" className="transition hover:text-[#F3D24F]">
               {t.nav1}
-            </a>
-            <a href="#netzwerke" className="transition hover:text-[#FCD34D]">
+            </Link>
+            <a href="#netzwerke" className="transition hover:text-[#F3D24F]">
               {t.nav2}
             </a>
-            <a href="#ablauf" className="transition hover:text-[#FCD34D]">
+            <a href="#ablauf" className="transition hover:text-[#F3D24F]">
               {t.nav3}
             </a>
-            <a href="#faq" className="transition hover:text-[#FCD34D]">
+            <a href="#faq" className="transition hover:text-[#F3D24F]">
               {t.nav4}
             </a>
           </nav>
 
           <div className="flex items-center gap-3">
+            <Link
+              href="/fallanalyse"
+              className="hidden rounded-full bg-[#F3D24F] px-5 py-2.5 text-sm font-semibold text-black transition hover:brightness-105 md:inline-flex"
+            >
+              {t.ctaTop}
+            </Link>
+
             <div className="relative" ref={langMenuRef}>
               <button
                 type="button"
                 onClick={() => setLangMenuOpen((prev) => !prev)}
-                className="flex items-center gap-2 rounded-full border border-white/10 bg-[#111827] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1F2937]"
+                className="flex items-center gap-2 rounded-full border border-white/10 bg-[#0A1328] px-4 py-2 text-sm font-semibold text-white"
               >
-                <span>{lang === 'de' ? '🇩🇪' : '🇬🇧'}</span>
                 <span>{lang === 'de' ? 'DE' : 'EN'}</span>
-                <span className="text-xs opacity-80">▾</span>
+                <span>{lang === 'de' ? '🇩🇪' : '🇬🇧'}</span>
+                <span className="text-xs">▼</span>
               </button>
 
               {langMenuOpen && (
-                <div className="absolute right-0 top-12 z-50 min-w-[160px] rounded-2xl border border-white/10 bg-[#111827] p-2 shadow-2xl">
+                <div className="absolute right-0 top-12 z-50 min-w-[150px] rounded-2xl border border-white/10 bg-[#0A1328] p-2 shadow-2xl">
                   <button
                     type="button"
                     onClick={() => {
                       setLang('de');
                       setLangMenuOpen(false);
                     }}
-                    className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm transition ${
+                    className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm ${
                       lang === 'de'
-                        ? 'bg-[#FCD34D] text-black'
-                        : 'text-white hover:bg-[#1F2937]'
+                        ? 'bg-[#F3D24F] text-black'
+                        : 'text-white hover:bg-white/5'
                     }`}
                   >
-                    <span>🇩🇪</span>
-                    <span>Deutsch</span>
+                    🇩🇪 Deutsch
                   </button>
 
                   <button
@@ -464,14 +390,13 @@ if (typeof window !== 'undefined' && window.gtag) {
                       setLang('en');
                       setLangMenuOpen(false);
                     }}
-                    className={`mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm transition ${
+                    className={`mt-1 flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm ${
                       lang === 'en'
-                        ? 'bg-[#FCD34D] text-black'
-                        : 'text-white hover:bg-[#1F2937]'
+                        ? 'bg-[#F3D24F] text-black'
+                        : 'text-white hover:bg-white/5'
                     }`}
                   >
-                    <span>🇬🇧</span>
-                    <span>English</span>
+                    🇬🇧 English
                   </button>
                 </div>
               )}
@@ -480,33 +405,33 @@ if (typeof window !== 'undefined' && window.gtag) {
         </div>
       </header>
 
-      <section className="border-b border-white/10 px-6 py-20 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-          <div className="max-w-3xl">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#111827] px-4 py-2 text-sm text-slate-200 shadow-sm">
-              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
-              {t.intakeBadge}
+      <section className="border-b border-white/10 px-6 py-16 lg:px-8 lg:py-24">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1.05fr] lg:items-start">
+          <div className="pt-4">
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#0A1328] px-5 py-3 text-sm font-medium text-white">
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+              {t.heroBadge}
             </div>
 
-            <h1 className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-3xl text-5xl font-semibold leading-[1.15] tracking-tight text-white lg:text-7xl">
               {t.heroTitle}
             </h1>
 
-            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+            <p className="mt-8 max-w-2xl text-xl leading-9 text-slate-200">
               {t.heroText}
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href="#kontakt-form"
-                className="rounded-xl bg-[#FCD34D] px-6 py-4 font-semibold text-black transition hover:bg-[#FBBF24]"
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Link
+                href="/fallanalyse"
+                className="rounded-2xl bg-[#F3D24F] px-8 py-4 text-lg font-semibold text-black transition hover:brightness-105"
               >
                 {t.heroBtn1}
-              </a>
+              </Link>
 
               <a
                 href="#ablauf"
-                className="rounded-xl border border-white/10 bg-[#111827] px-6 py-4 font-semibold text-white transition hover:bg-[#1F2937]"
+                className="rounded-2xl border border-white/10 bg-[#0A1328] px-8 py-4 text-lg font-semibold text-white transition hover:bg-white/5"
               >
                 {t.heroBtn2}
               </a>
@@ -515,46 +440,43 @@ if (typeof window !== 'undefined' && window.gtag) {
 
           <div
             id="kontakt-form"
-            className="rounded-3xl border border-white/10 bg-[#111827] p-6 shadow-2xl shadow-black/30"
+            className="rounded-[30px] border border-white/10 bg-[#0A1328] p-6 shadow-[0_0_40px_rgba(0,0,0,0.35)] lg:p-8"
           >
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#0B0F19] px-4 py-2 text-sm text-slate-200 shadow-sm">
-              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
-              {t.intakeBadge}
-            </div>
+            <h2 className="max-w-2xl text-3xl font-semibold leading-tight text-white lg:text-5xl">
+              {t.formTitle}
+            </h2>
 
-            <h2 className="text-3xl font-semibold text-white">{t.formTitle}</h2>
+            <p className="mt-8 text-base leading-8 text-slate-200">
+              {t.formIntro}
+            </p>
 
-            <form onSubmit={handleSubmit} className="mt-8 grid gap-5 md:grid-cols-2">
-              <p className="md:col-span-2 text-sm leading-7 text-slate-300">
-                {t.intakeIntro}
-              </p>
-
+            <form onSubmit={handleSubmit} className="mt-8 grid gap-6 md:grid-cols-2">
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
+                <label className="mb-2 block text-sm font-medium text-white">
                   {t.formName}
                 </label>
                 <input
                   type="text"
                   name="name"
                   placeholder={t.formName}
-                  className="w-full rounded-xl border border-white/10 bg-[#020617] px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-[#FCD34D]"
+                  className="w-full rounded-2xl border border-white/10 bg-[#020817] px-5 py-4 text-base text-white placeholder:text-slate-500 outline-none focus:border-[#F3D24F]"
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
+                <label className="mb-2 block text-sm font-medium text-white">
                   {t.formEmail}
                 </label>
                 <input
                   type="email"
                   name="email"
                   placeholder={t.formEmail}
-                  className="w-full rounded-xl border border-white/10 bg-[#020617] px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-[#FCD34D]"
+                  className="w-full rounded-2xl border border-white/10 bg-[#020817] px-5 py-4 text-base text-white placeholder:text-slate-500 outline-none focus:border-[#F3D24F]"
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
+                <label className="mb-2 block text-sm font-medium text-white">
                   {t.formPhone}
                 </label>
                 <input
@@ -562,92 +484,89 @@ if (typeof window !== 'undefined' && window.gtag) {
                   name="phone"
                   placeholder={t.formPhone}
                   required
-                  className="w-full rounded-xl border border-white/10 bg-[#020617] px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-[#FCD34D]"
+                  className="w-full rounded-2xl border border-white/10 bg-[#020817] px-5 py-4 text-base text-white placeholder:text-slate-500 outline-none focus:border-[#F3D24F]"
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
+                <label className="mb-2 block text-sm font-medium text-white">
                   {t.formPlatform}
                 </label>
                 <input
                   type="text"
                   name="platform"
                   placeholder={t.formPlatform}
-                  className="w-full rounded-xl border border-white/10 bg-[#020617] px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-[#FCD34D]"
+                  className="w-full rounded-2xl border border-white/10 bg-[#020817] px-5 py-4 text-base text-white placeholder:text-slate-500 outline-none focus:border-[#F3D24F]"
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
+                <label className="mb-2 block text-sm font-medium text-white">
                   {t.formWallet}
                 </label>
                 <input
                   type="text"
                   name="wallet"
                   placeholder={t.formWallet}
-                  className="w-full rounded-xl border border-white/10 bg-[#020617] px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-[#FCD34D]"
+                  className="w-full rounded-2xl border border-white/10 bg-[#020817] px-5 py-4 text-base text-white placeholder:text-slate-500 outline-none focus:border-[#F3D24F]"
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
+                <label className="mb-2 block text-sm font-medium text-white">
                   {t.formTx}
                 </label>
                 <input
                   type="text"
                   name="transactionHash"
                   placeholder={t.formTx}
-                  className="w-full rounded-xl border border-white/10 bg-[#020617] px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-[#FCD34D]"
+                  className="w-full rounded-2xl border border-white/10 bg-[#020817] px-5 py-4 text-base text-white placeholder:text-slate-500 outline-none focus:border-[#F3D24F]"
                 />
               </div>
 
               <div className="md:col-span-2">
-                <label className="mb-2 block text-sm font-medium text-slate-200">
+                <label className="mb-2 block text-sm font-medium text-white">
                   {t.formDesc}
                 </label>
                 <textarea
-                  rows={5}
+                  rows={6}
                   name="description"
                   placeholder={t.formDesc}
-                  className="w-full rounded-2xl border border-white/10 bg-[#020617] px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-[#FCD34D]"
+                  className="w-full rounded-2xl border border-white/10 bg-[#020817] px-5 py-4 text-base text-white placeholder:text-slate-500 outline-none focus:border-[#F3D24F]"
                 />
               </div>
 
-              <p className="md:col-span-2 text-xs leading-6 text-slate-400">
+              <p className="md:col-span-2 text-sm leading-8 text-slate-300">
                 {t.formNote}
               </p>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="md:col-span-2 w-full rounded-xl bg-[#FCD34D] px-6 py-4 font-semibold text-black transition hover:bg-[#FBBF24] disabled:cursor-not-allowed disabled:opacity-60"
+                className="md:col-span-2 rounded-2xl bg-[#F3D24F] px-8 py-5 text-lg font-semibold text-black transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? t.sendLoading : t.formBtn}
               </button>
 
               {message && (
-                <div className="md:col-span-2 rounded-xl border border-white/10 bg-[#0B0F19] px-4 py-3 text-sm text-slate-200">
+                <div className="md:col-span-2 rounded-2xl border border-white/10 bg-[#07101F] px-5 py-4 text-sm text-white">
                   {message}
                 </div>
               )}
 
-
-              <div className="md:col-span-2 rounded-2xl border border-white/10 bg-[#0B0F19] px-5 py-4 text-sm leading-6 text-slate-300">
-                <p className="font-medium text-white">Wichtiger Hinweis</p>
-                <p className="mt-2">
-                  Es wird keine Rückgewinnung von Vermögenswerten garantiert. Jede
-                  Anfrage wird individuell geprüft. Die erste Fallprüfung dient der
-                  Orientierung und ersetzt keine rechtliche oder finanzielle Beratung.
+              <div className="md:col-span-2 rounded-2xl border border-white/10 bg-[#07101F] px-5 py-5">
+                <p className="text-base font-semibold text-white">
+                  {t.importantTitle}
+                </p>
+                <p className="mt-3 text-sm leading-8 text-slate-200">
+                  {t.importantText}
                 </p>
               </div>
             </form>
           </div>
         </div>
       </section>
-<div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
-  <TradingViewChart />
-</div>
+
       <section id="analyse" className="border-t border-white/10 bg-[#0F172A]">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
           <div className="max-w-2xl">
@@ -668,43 +587,7 @@ if (typeof window !== 'undefined' && window.gtag) {
         </div>
       </section>
 
-      <section className="border-t border-white/10 px-6 py-16 lg:px-8">
-        <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
-          <div className="rounded-2xl border border-white/10 bg-[#111827] p-6">
-            <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#FCD34D]/15 text-lg text-[#FCD34D]">
-              🔎
-            </div>
-            <h3 className="text-lg font-semibold text-white">Strukturierte Analyse</h3>
-            <p className="mt-2 text-sm text-slate-300">
-              Detaillierte Auswertung von Wallet-Aktivitäten und Transaktionsverläufen.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-[#111827] p-6">
-            <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#FCD34D]/15 text-lg text-[#FCD34D]">
-              ⛓️
-            </div>
-            <h3 className="text-lg font-semibold text-white">Mehrere Netzwerke</h3>
-            <p className="mt-2 text-sm text-slate-300">
-              Analyse über verschiedene Blockchain-Netzwerke hinweg.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-[#111827] p-6">
-            <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#FCD34D]/15 text-lg text-[#FCD34D]">
-              ⚡
-            </div>
-            <h3 className="text-lg font-semibold text-white">
-              Schnelle Einschätzung
-            </h3>
-            <p className="mt-2 text-sm text-slate-300">
-              Erste Rückmeldung innerhalb von 24–48 Stunden.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="netzwerke" className="border-t border-white/10 bg-[#0F172A]">
+      <section id="netzwerke" className="border-t border-white/10 bg-[#020817]">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
           <div className="max-w-2xl">
             <h2 className="text-3xl font-semibold text-white">{t.section2Title}</h2>
@@ -734,51 +617,6 @@ if (typeof window !== 'undefined' && window.gtag) {
       <section id="ablauf" className="border-t border-white/10 bg-[#0F172A]">
         <div className="mx-auto max-w-6xl px-6 py-20 lg:px-8">
           <div className="max-w-2xl">
-            <h2 className="text-3xl font-semibold text-white">Wie es weitergeht</h2>
-            <p className="mt-4 text-slate-300">
-              Nach dem Absenden Ihrer Anfrage erfolgt eine erste strukturierte Prüfung
-              Ihres Falls.
-            </p>
-          </div>
-
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            <div className="rounded-2xl border border-white/10 bg-[#111827] p-6">
-              <p className="text-sm font-semibold text-[#FCD34D]">01</p>
-              <h3 className="mt-2 text-lg font-semibold text-white">
-                Anfrage absenden
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-slate-300">
-                Sie übermitteln die wichtigsten Angaben zu Ihrer Situation über das
-                Formular.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-[#111827] p-6">
-              <p className="text-sm font-semibold text-[#FCD34D]">02</p>
-              <h3 className="mt-2 text-lg font-semibold text-white">
-                Erste Fallprüfung
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-slate-300">
-                Ihr Fall wird anhand der übermittelten Informationen vorläufig
-                eingeordnet.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-[#111827] p-6">
-              <p className="text-sm font-semibold text-[#FCD34D]">03</p>
-              <h3 className="mt-2 text-lg font-semibold text-white">Rückmeldung</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-300">
-                Sie erhalten eine Rückmeldung per E-Mail oder Telefon mit den
-                möglichen nächsten Schritten.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="prozess" className="border-t border-white/10 bg-[#0F172A]">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-          <div className="max-w-2xl">
             <h2 className="text-3xl font-semibold text-white">{t.section3Title}</h2>
           </div>
 
@@ -786,77 +624,30 @@ if (typeof window !== 'undefined' && window.gtag) {
             {t.steps.map(([step, text]) => (
               <div
                 key={step}
-                className="rounded-2xl border border-white/10 bg-[#111827] p-6 shadow-sm"
+                className="rounded-2xl border border-white/10 bg-[#111827] p-6"
               >
-                <p className="font-semibold text-[#FCD34D]">{step}</p>
-                <p className="mt-2 text-sm text-slate-100">{text}</p>
+                <p className="text-sm font-semibold text-[#F3D24F]">{step}</p>
+                <p className="mt-3 text-sm leading-6 text-slate-300">{text}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="faq" className="border-t border-white/10 bg-[#0F172A]">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+      <section id="faq" className="border-t border-white/10 px-6 py-20 lg:px-8">
+        <div className="mx-auto max-w-5xl">
           <h2 className="text-3xl font-semibold text-white">{t.faqTitle}</h2>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {t.faqs.map(([q, a]) => (
+          <div className="mt-10 space-y-4">
+            {t.faqs.map(([question, answer]) => (
               <div
-                key={q}
-                className="rounded-2xl border border-white/10 bg-[#111827] px-6 py-5 transition hover:bg-[#1F2937]"
+                key={question}
+                className="rounded-2xl border border-white/10 bg-[#111827] p-6"
               >
-                <h3 className="font-semibold text-white">{q}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-300">{a}</p>
+                <p className="font-semibold text-white">{question}</p>
+                <p className="mt-3 text-sm leading-6 text-slate-300">{answer}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-white/10 bg-[#0F172A] px-6 py-20 lg:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl font-semibold text-white">
-              Warum Capital Crypto Germany?
-            </h2>
-            <p className="mt-4 text-slate-300">
-              Unsere Arbeit konzentriert sich auf strukturierte Blockchain-Analysen,
-              nachvollziehbare Fallprüfung und eine klare erste Einschätzung Ihrer
-              Situation.
-            </p>
-          </div>
-
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            <div className="rounded-2xl border border-white/10 bg-[#111827] p-6">
-              <h3 className="text-lg font-semibold text-white">
-                Strukturierte Fallprüfung
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-slate-300">
-                Jede Anfrage wird auf Basis der übermittelten Angaben geordnet und
-                nachvollziehbar geprüft.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-[#111827] p-6">
-              <h3 className="text-lg font-semibold text-white">
-                Fokus auf Blockchain-Daten
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-slate-300">
-                Wallet-Bewegungen, Transaktionsketten und Plattformangaben werden
-                strukturiert ausgewertet.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-[#111827] p-6">
-              <h3 className="text-lg font-semibold text-white">
-                Klare Rückmeldung
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-slate-300">
-                Sie erhalten eine erste Einschätzung und eine klare Orientierung zu
-                möglichen nächsten Schritten.
-              </p>
-            </div>
           </div>
         </div>
       </section>
@@ -873,10 +664,9 @@ if (typeof window !== 'undefined' && window.gtag) {
           <div>
             <p className="mb-2 font-semibold text-white">Contact</p>
             <p className="text-sm text-slate-300">Email:</p>
-
             <a
               href="mailto:support@capitalcryptogermany.com"
-              className="text-[#FCD34D] transition hover:text-[#FBBF24]"
+              className="text-[#F3D24F] transition hover:text-[#F7DA68]"
             >
               support@capitalcryptogermany.com
             </a>
@@ -884,19 +674,16 @@ if (typeof window !== 'undefined' && window.gtag) {
 
           <div>
             <p className="mb-2 font-semibold text-white">Legal</p>
-
             <div className="flex flex-col gap-2 text-sm">
-              <a href="/privacy" className="text-slate-300 transition hover:text-white">
+              <Link href="/privacy" className="text-slate-300 transition hover:text-white">
                 Privacy Policy
-              </a>
-
-              <a href="/cookies" className="text-slate-300 transition hover:text-white">
+              </Link>
+              <Link href="/cookies" className="text-slate-300 transition hover:text-white">
                 Cookies Policy
-              </a>
-
-              <a href="/contact" className="text-slate-300 transition hover:text-white">
+              </Link>
+              <Link href="/contact" className="text-slate-300 transition hover:text-white">
                 Contact
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -907,7 +694,7 @@ if (typeof window !== 'undefined' && window.gtag) {
       </footer>
 
       <a
-        href="https://wa.me/4915212289889?text=Für%20eine%20detaillierte%20Beratung%20hinterlassen%20Sie%20bitte%20eine%20passende%20Uhrzeit%20für%20einen%20Kontakt%20per%20E-Mail%20oder%20Telefon."
+        href="https://wa.me/4915783358244?text=Für%20eine%20detaillierte%20Beratung%20hinterlassen%20Sie%20bitte%20eine%20passende%20Uhrzeit%20für%20einen%20Kontakt%20per%20E-Mail%20oder%20Telefon."
         target="_blank"
         rel="noreferrer"
         className="fixed bottom-6 right-6 rounded-full bg-green-500 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105"
