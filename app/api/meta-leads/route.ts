@@ -1,13 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createLeadAndSyncCRM } from "@/lib/lead-service";
 
 const VERIFY_TOKEN = process.env.META_VERIFY_TOKEN!;
 const META_ACCESS_TOKEN = process.env.META_ACCESS_TOKEN!;
-const ELNOPY_API_URL = process.env.ELNOPY_API_URL!;
-const ELNOPY_LINK_ID = process.env.ELNOPY_LINK_ID!;
-
-function normalizePhone(phone: string) {
-  return phone.replace(/\s+/g, "").trim();
-}
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -39,8 +34,8 @@ export async function POST(req: NextRequest) {
         if (!leadgenId) continue;
 
         const metaRes = await fetch(
-          `https://graph.facebook.com/v23.0/${leadgenId}?fields=field_data,created_time&access_token=${META_ACCESS_TOKEN}`,
-          { method: "GET" }
+          `https://graph.facebook.com/v23.0/${leadgenId}?fields=field_data&access_token=${META_ACCESS_TOKEN}`,
+          { cache: "no-store" }
         );
 
         const metaLead = await metaRes.json();
@@ -56,64 +51,36 @@ export async function POST(req: NextRequest) {
           fields[item.name] = item.values?.[0] || "";
         }
 
-        const fullName = fields.full_name || fields.name || "";
-        const nameParts = fullName.trim().split(" ").filter(Boolean);
+        const fullName =
+          fields.full_name ||
+          fields.name ||
+          `${fields.first_name || ""} ${fields.last_name || ""}`.trim();
 
-        const fname =
-          fields.first_name ||
-          nameParts[0] ||
-          "Lead";
+        const email = fields.email || "";
+        const phone = fields.phone_number || fields.phone || "";
 
-        const lname =
-          fields.last_name ||
-          (nameParts.length > 1 ? nameParts.slice(1).join(" ") : "Meta");
+        const extraDescription = Object.entries(fields)
+          .map(([key, value]) => `${key}: ${value}`)
+          .join(" | ");
 
-        const email = (fields.email || "").trim();
-        const fullphone = normalizePhone(fields.phone_number || fields.phone || "");
-
-        const payload = {
-          fname,
-          lname,
-          email,
-          fullphone,
-          ip: "0.0.0.0",
-          country: "DE",
-          language: "de",
-          link_id: ELNOPY_LINK_ID,
-          funnel: "Capital Crypto Germany",
+        const result = await createLeadAndSyncCRM({
           source: "Facebook",
-        };
-
-        console.log("ELNOPY PAYLOAD:", payload);
-
-        const elnopyRes = await fetch(ELNOPY_API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
+          name: fullName,
+          email,
+          phone,
+          platform: fields["Über welche Art von Plattform lief die Investition?"] || "Meta Lead",
+          wallet: "",
+          transactionHash: "",
+          description: extraDescription || "Lead from Meta Ads",
         });
 
-        const elnopyText = await elnopyRes.text();
-
-        let elnopyData: unknown = elnopyText;
-        try {
-          elnopyData = JSON.parse(elnopyText);
-        } catch {
-          // keep raw text
-        }
-
-        console.log("ELNOPY RESPONSE:", elnopyData);
-
-        if (!elnopyRes.ok) {
-          console.error("ELNOPY HTTP ERROR:", elnopyData);
-        }
+        console.log("META CRM RESULT:", result);
       }
     }
 
     return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("WEBHOOK ERROR:", error);
+    console.error("META WEBHOOK ERROR:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
