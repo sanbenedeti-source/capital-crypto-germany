@@ -259,61 +259,61 @@ export default function HomePage() {
 
   const t = translations[lang];
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    if (loading) return;
+  if (loading) return;
 
-    setLoading(true);
-    setMessage('');
+  setLoading(true);
+  setMessage('');
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
+  const form = e.currentTarget;
+  const formData = new FormData(form);
 
-    const payload = {
-      name: String(formData.get('name') || ''),
-      email: String(formData.get('email') || ''),
-      phone: String(formData.get('phone') || ''),
-      platform: String(formData.get('platform') || ''),
-      wallet: String(formData.get('wallet') || ''),
-      transactionHash: String(formData.get('transactionHash') || ''),
-      description: String(formData.get('description') || ''),
-    };
-
-    try {
-      const res = await fetch('/api/case-review', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setMessage(data.error || t.sendError);
-        return;
-      }
-
-      if (typeof window !== 'undefined' && window.fbq) {
-        window.fbq('track', 'Lead');
-      }
-
-      setMessage(`${t.sendSuccess} Lead ID: ${data.leadId}`);
-      form.reset();
-
-      const text = encodeURIComponent(
-        'Guten Tag, hier ist CAPITAL CRYPTO BROKER. Eine neue Anfrage wurde soeben über die Website eingereicht.'
-      );
-
-      setTimeout(() => {
-        window.location.href = `https://wa.me/4915783358244?text=${text}`;
-      }, 300);
-    } catch {
-      setMessage(t.networkError);
-    } finally {
-      setLoading(false);
-    }
+  const payload = {
+    name: String(formData.get('name') || ''),
+    email: String(formData.get('email') || ''),
+    phone: String(formData.get('phone') || ''),
+    platform: String(formData.get('platform') || ''),
+    wallet: String(formData.get('wallet') || ''),
+    transactionHash: String(formData.get('transactionHash') || ''),
+    description: String(formData.get('description') || ''),
   };
+
+  try {
+    const res = await fetch('/api/send-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setMessage(data.error || t.sendError);
+      return;
+    }
+
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'Lead');
+    }
+
+    setMessage(t.sendSuccess);
+    form.reset();
+
+    const text = encodeURIComponent(
+      'Guten Tag, hier ist CAPITAL CRYPTO BROKER. Eine neue Anfrage wurde soeben über die Website eingereicht.'
+    );
+
+    setTimeout(() => {
+      window.location.href = `https://wa.me/4915212289889?text=${text}`;
+    }, 300);
+  } catch {
+    setMessage(t.networkError);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <main className="min-h-screen bg-[#020817] text-white">
