@@ -48,6 +48,38 @@ export async function POST(req: Request) {
       );
     }
 
+    // SEND TO CRM
+    try {
+      const crmRes = await fetch(process.env.CRM_API_URL!, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.CRM_API_TOKEN}`,
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          platform,
+          wallet,
+          transactionHash,
+          description,
+          source: 'website',
+        }),
+      });
+
+      const crmText = await crmRes.text();
+
+      console.log('CRM STATUS:', crmRes.status);
+      console.log('CRM RESPONSE:', crmText);
+
+      if (!crmRes.ok) {
+        console.error('CRM REQUEST FAILED');
+      }
+    } catch (err) {
+      console.error('CRM ERROR:', err);
+    }
+
     await sendLeadEmail({
       name,
       email,
