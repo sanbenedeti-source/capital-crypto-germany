@@ -753,6 +753,45 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      <section className="border-t border-white/10 bg-[#020817] px-6 py-20 lg:px-8">
+  <div className="mx-auto max-w-7xl">
+    <div className="max-w-2xl">
+      <h2 className="text-3xl font-semibold text-white">
+        Warum Capital Crypto Germany
+      </h2>
+      <p className="mt-4 text-slate-300">
+        Unser Ansatz ist strukturiert, sachlich und auf dokumentierbare
+        Informationen ausgerichtet.
+      </p>
+    </div>
+
+    <div className="mt-10 grid gap-6 md:grid-cols-3">
+      <div className="rounded-2xl border border-white/10 bg-[#111827] p-6">
+        <h3 className="font-semibold text-white">Klare Einschätzung</h3>
+        <p className="mt-3 text-sm leading-6 text-slate-300">
+          Wir betrachten Plattformangaben, Transaktionswege und bekannte
+          Auffälligkeiten strukturiert.
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-[#111827] p-6">
+        <h3 className="font-semibold text-white">Dokumentierter Prozess</h3>
+        <p className="mt-3 text-sm leading-6 text-slate-300">
+          Jeder Fall wird anhand der vorliegenden Informationen nachvollziehbar
+          eingeordnet.
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-[#111827] p-6">
+        <h3 className="font-semibold text-white">Realistische Kommunikation</h3>
+        <p className="mt-3 text-sm leading-6 text-slate-300">
+          Keine pauschalen Zusagen, sondern eine sachliche erste Bewertung Ihrer
+          Situation.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
       <section id="faq" className="border-t border-white/10 px-6 py-20 lg:px-8">
         <div className="mx-auto max-w-5xl">
