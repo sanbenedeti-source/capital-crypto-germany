@@ -455,9 +455,7 @@ export default function HomePage() {
 
             <form onSubmit={handleSubmit} className="mt-8 grid gap-6 md:grid-cols-2">
               <div>
-                <label className="mb-2 block text-sm font-medium text-white">
-                  {t.formName}
-                </label>
+           
                 <input
                   type="text"
                   name="name"
@@ -467,9 +465,7 @@ export default function HomePage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-white">
-                  {t.formEmail}
-                </label>
+        
                 <input
                   type="email"
                   name="email"
@@ -479,9 +475,7 @@ export default function HomePage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-white">
-                  {t.formPhone}
-                </label>
+             
                 <input
                   type="text"
                   name="phone"
@@ -492,9 +486,7 @@ export default function HomePage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-white">
-                  {t.formPlatform}
-                </label>
+             
                 <input
                   type="text"
                   name="platform"
@@ -504,9 +496,7 @@ export default function HomePage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-white">
-                  {t.formWallet}
-                </label>
+           
                 <input
                   type="text"
                   name="wallet"
@@ -516,9 +506,7 @@ export default function HomePage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-white">
-                  {t.formTx}
-                </label>
+            
                 <input
                   type="text"
                   name="transactionHash"
@@ -528,9 +516,7 @@ export default function HomePage() {
               </div>
 
               <div className="md:col-span-2">
-                <label className="mb-2 block text-sm font-medium text-white">
-                  {t.formDesc}
-                </label>
+             
                 <textarea
                   rows={6}
                   name="description"
