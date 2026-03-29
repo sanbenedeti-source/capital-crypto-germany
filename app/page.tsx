@@ -78,6 +78,8 @@ const translations: Record<Language, Translation> = {
       'Dokumentation der Geldflüsse',
     ],
     section2Title: 'Unterstützte Blockchain-Netzwerke',
+
+   
     section3Title: 'Unser Analyseprozess',
     steps: [
       ['01', 'Beschreibung der Situation und erste Datensammlung'],
@@ -340,6 +342,7 @@ export default function HomePage() {
             <a href="#netzwerke" className="transition hover:text-[#F3D24F]">
               {t.nav2}
             </a>
+
             <a href="#ablauf" className="transition hover:text-[#F3D24F]">
               {t.nav3}
             </a>
@@ -613,7 +616,124 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+<section className="border-t border-white/10 bg-[#0F172A] px-6 py-16 lg:px-8">
+  <div className="mx-auto max-w-6xl">
+    <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#F0B90B]">
+          Live Marktüberblick
+        </p>
+        <h2 className="font-serif text-3xl text-white sm:text-4xl">
+          Aktuelle Krypto-News & Marktbewegungen
+        </h2>
+        <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
+          Verfolgen Sie aktuelle Schlagzeilen aus dem Kryptomarkt. Relevante
+          Entwicklungen bei Bitcoin, Ethereum, Regulierungen und verdächtigen
+          Plattformen können für die Bewertung eines Falls wichtig sein.
+        </p>
+      </div>
 
+      <a
+        href="/fallanalyse"
+        className="inline-flex w-fit items-center justify-center rounded-full bg-[#F0B90B] px-6 py-3 text-sm font-semibold text-black transition hover:opacity-90"
+      >
+        Kostenlose Analyse starten
+      </a>
+    </div>
+
+    <div className="grid gap-6 lg:grid-cols-[1.6fr_0.9fr]">
+      <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#0A0F1A] shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+          <div>
+            <h3 className="text-base font-semibold text-white">
+              Live News Feed
+            </h3>
+            <p className="mt-1 text-xs text-slate-400">
+              Internationale Markt- und Branchenmeldungen in Echtzeit
+            </p>
+          </div>
+          <span className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300">
+            Live
+          </span>
+        </div>
+
+        <div className="p-2 sm:p-4">
+          <iframe
+            src="https://s.tradingview.com/embed-widget/timeline/?locale=en#%7B%22colorTheme%22%3A%22dark%22%2C%22feedMode%22%3A%22all_symbols%22%2C%22isTransparent%22%3Atrue%2C%22displayMode%22%3A%22regular%22%2C%22width%22%3A%22100%25%22%2C%22height%22%3A420%7D"
+            width="100%"
+            height="420"
+            frameBorder="0"
+            scrolling="no"
+            title="Live Krypto News"
+            className="min-h-[420px] w-full rounded-2xl"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-6">
+        <div className="rounded-3xl border border-white/10 bg-[#0A0F1A] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+          <h3 className="text-lg font-semibold text-white">
+            Warum aktuelle Nachrichten relevant sind
+          </h3>
+          <p className="mt-3 text-sm leading-7 text-slate-300">
+            Marktveränderungen, regulatorische Warnungen und Berichte über
+            problematische Plattformen liefern oft wichtige Hinweise für die
+            Einschätzung eines konkreten Sachverhalts.
+          </p>
+
+          <div className="mt-5 space-y-3">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p className="text-sm font-semibold text-white">
+                Plattform-Risiken erkennen
+              </p>
+              <p className="mt-1 text-xs leading-6 text-slate-400">
+                Hinweise auf gesperrte Auszahlungen, plötzliche Gebühren oder
+                unklare Kommunikation können früh sichtbar werden.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p className="text-sm font-semibold text-white">
+                Regulatorische Entwicklungen
+              </p>
+              <p className="mt-1 text-xs leading-6 text-slate-400">
+                Neue Warnmeldungen oder aufsichtsrechtliche Maßnahmen können bei
+                der Einordnung einer Plattform helfen.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p className="text-sm font-semibold text-white">
+                Marktumfeld besser verstehen
+              </p>
+              <p className="mt-1 text-xs leading-6 text-slate-400">
+                Starke Kursschwankungen werden oft genutzt, um Anleger zu
+                schnellen Entscheidungen zu drängen.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-3xl border border-[#F0B90B]/20 bg-[#0A0F1A] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#F0B90B]">
+            Hinweis
+          </p>
+          <p className="mt-3 text-sm leading-7 text-slate-300">
+            Nachrichten allein ersetzen keine individuelle Prüfung. Eine
+            strukturierte Analyse des Einzelfalls bleibt entscheidend.
+          </p>
+
+          <a
+            href="/fallanalyse"
+            className="mt-5 inline-flex items-center justify-center rounded-full bg-[#F0B90B] px-5 py-3 text-sm font-semibold text-black transition hover:opacity-90"
+          >
+            Fall analysieren lassen
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
       <section id="ablauf" className="border-t border-white/10 bg-[#0F172A]">
         <div className="mx-auto max-w-6xl px-6 py-20 lg:px-8">
           <div className="max-w-2xl">
@@ -694,7 +814,7 @@ export default function HomePage() {
       </footer>
 
       <a
-        href="https://wa.me/4915783358244?text=Für%20eine%20detaillierte%20Beratung%20hinterlassen%20Sie%20bitte%20eine%20passende%20Uhrzeit%20für%20einen%20Kontakt%20per%20E-Mail%20oder%20Telefon."
+        href="https://wa.me/4915212289889?text=Für%20eine%20detaillierte%20Beratung%20hinterlassen%20Sie%20bitte%20eine%20passende%20Uhrzeit%20für%20einen%20Kontakt%20per%20E-Mail%20oder%20Telefon."
         target="_blank"
         rel="noreferrer"
         className="fixed bottom-6 right-6 rounded-full bg-green-500 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105"
