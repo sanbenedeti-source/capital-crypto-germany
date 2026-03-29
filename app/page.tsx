@@ -616,6 +616,157 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+<section className="border-t border-white/10 bg-[#06101F] px-6 py-20 lg:px-8">
+  <div className="mx-auto max-w-7xl">
+    <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div className="max-w-3xl">
+        <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#F0B90B]">
+          Marktmonitor
+        </p>
+        <h2 className="text-3xl font-semibold text-white sm:text-4xl">
+          Marktanalyse & aktuelle Entwicklungen
+        </h2>
+        <p className="mt-3 text-sm leading-7 text-slate-300 sm:text-base">
+          Ein strukturierter Überblick über Kursbewegungen, Marktstimmung und
+          relevante Signale aus dem Kryptoumfeld.
+        </p>
+      </div>
+
+      <a
+        href="/fallanalyse"
+        className="inline-flex w-fit items-center justify-center rounded-full bg-[#F0B90B] px-6 py-3 text-sm font-semibold text-black transition hover:opacity-90"
+      >
+        Fall professionell prüfen lassen
+      </a>
+    </div>
+
+    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      {[
+        {
+          label: 'Bitcoin',
+          value: 'BTC / Marktführer',
+          meta: 'Hohe Marktbeobachtung',
+        },
+        {
+          label: 'Ethereum',
+          value: 'ETH / Netzwerkaktivität',
+          meta: 'Relevanz für Wallet-Analysen',
+        },
+        {
+          label: 'Volatilität',
+          value: 'Erhöht',
+          meta: 'Schnelle Entscheidungen kritisch prüfen',
+        },
+        {
+          label: 'Marktumfeld',
+          value: 'Sensibel',
+          meta: 'Regulatorik und Liquidität im Blick',
+        },
+      ].map((item) => (
+        <div
+          key={item.label}
+          className="rounded-3xl border border-white/10 bg-[#0A1328] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.22)]"
+        >
+          <p className="text-sm text-slate-400">{item.label}</p>
+          <p className="mt-2 text-xl font-semibold text-white">{item.value}</p>
+          <p className="mt-2 text-sm leading-6 text-slate-400">{item.meta}</p>
+        </div>
+      ))}
+    </div>
+
+    <div className="mt-6 grid gap-6 lg:grid-cols-[1.65fr_0.9fr]">
+      <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#0A1328] shadow-[0_12px_35px_rgba(0,0,0,0.26)]">
+        <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
+          <div>
+            <h3 className="text-lg font-semibold text-white">
+              Live Marktchart
+            </h3>
+            <p className="mt-1 text-sm text-slate-400">
+              Übersicht über aktuelle Kursbewegungen
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs text-slate-400">
+            <span className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-3 py-1 text-emerald-300">
+              Live
+            </span>
+          </div>
+        </div>
+
+        <div className="p-4">
+          <iframe
+            src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_chart&symbol=BINANCE%3ABTCUSDT&interval=240&hidesidetoolbar=1&symboledit=1&saveimage=0&toolbarbg=rgba(6,16,31,1)&studies=[]&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=1&hideideas=1"
+            width="100%"
+            height="460"
+            frameBorder="0"
+            scrolling="no"
+            title="Premium Market Chart"
+            className="w-full rounded-2xl"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-6">
+        <div className="rounded-3xl border border-white/10 bg-[#0A1328] p-6 shadow-[0_12px_35px_rgba(0,0,0,0.26)]">
+          <h3 className="text-lg font-semibold text-white">
+            Analystische Einordnung
+          </h3>
+
+          <div className="mt-5 space-y-4">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p className="text-sm font-semibold text-white">
+                Marktbewegungen richtig einordnen
+              </p>
+              <p className="mt-2 text-xs leading-6 text-slate-400">
+                Starke Schwankungen allein sind kein Beweis für Unregelmäßigkeiten,
+                können aber genutzt werden, um Anleger unter Druck zu setzen.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p className="text-sm font-semibold text-white">
+                Plattformsignale beachten
+              </p>
+              <p className="mt-2 text-xs leading-6 text-slate-400">
+                Verzögerte Auszahlungen, zusätzliche Gebühren oder unklare
+                Kommunikation sollten immer dokumentiert und geprüft werden.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p className="text-sm font-semibold text-white">
+                Struktur vor Geschwindigkeit
+              </p>
+              <p className="mt-2 text-xs leading-6 text-slate-400">
+                Eine sachliche Prüfung von Wallet-Daten, Transaktionswegen und
+                Kommunikationsmustern ist wichtiger als vorschnelle Schlüsse.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-3xl border border-[#F0B90B]/20 bg-[#0A1328] p-6 shadow-[0_12px_35px_rgba(0,0,0,0.26)]">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#F0B90B]">
+            Beobachtung
+          </p>
+          <p className="mt-3 text-sm leading-7 text-slate-300">
+            Marktinformationen können Hinweise liefern. Entscheidend bleibt
+            jedoch die individuelle Analyse der Plattform, der Zahlungen und der
+            dokumentierten Abläufe.
+          </p>
+
+          <a
+            href="/fallanalyse"
+            className="mt-5 inline-flex items-center justify-center rounded-full bg-[#F0B90B] px-5 py-3 text-sm font-semibold text-black transition hover:opacity-90"
+          >
+            Analyse anfordern
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section className="border-t border-white/10 bg-[#0F172A] px-6 py-16 lg:px-8">
   <div className="mx-auto max-w-6xl">
     <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
