@@ -49,6 +49,15 @@ export default function RootLayout({
 
       <body className="antialiased">
         {/* Google Tag Manager (noscript) */}
+<noscript>
+  <iframe
+    src="https://www.googletagmanager.com/ns.html?id=GTM-PH39698V"
+    height="0"
+    width="0"
+    style={{ display: "none", visibility: "hidden" }}
+  />
+</noscript>
+        {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-PH39698V"
