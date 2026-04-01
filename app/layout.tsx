@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="de">
       <head>
@@ -25,7 +25,7 @@ export default function RootLayout({
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-PH39698V');
+            })(window,document,'script','dataLayer','GTM-N4Q27QZH');
           `}
         </Script>
 
@@ -49,18 +49,9 @@ export default function RootLayout({
 
       <body className="antialiased">
         {/* Google Tag Manager (noscript) */}
-<noscript>
-  <iframe
-    src="https://www.googletagmanager.com/ns.html?id=GTM-PH39698V"
-    height="0"
-    width="0"
-    style={{ display: "none", visibility: "hidden" }}
-  />
-</noscript>
-        {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-PH39698V"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-N4Q27QZH"
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
