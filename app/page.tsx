@@ -335,21 +335,31 @@ export default function HomePage() {
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-8 text-sm font-medium text-white md:flex">
-            <Link href="/fallanalyse" className="transition hover:text-[#F3D24F]">
-              {t.nav1}
-            </Link>
-            <a href="#netzwerke" className="transition hover:text-[#F3D24F]">
-              {t.nav2}
-            </a>
+         <nav className="hidden items-center gap-8 text-sm font-medium text-white md:flex">
+  <Link href="/analyse" className="transition hover:text-[#F3D24F]">
+    Analyse
+  </Link>
 
-            <a href="#ablauf" className="transition hover:text-[#F3D24F]">
-              {t.nav3}
-            </a>
-            <a href="#faq" className="transition hover:text-[#F3D24F]">
-              {t.nav4}
-            </a>
-          </nav>
+  <Link href="/anlage" className="transition hover:text-[#F3D24F]">
+    Anlage
+  </Link>
+
+  <a href="#netzwerke" className="transition hover:text-[#F3D24F]">
+    Blockchains
+  </a>
+
+  <a href="#ablauf" className="transition hover:text-[#F3D24F]">
+    Ablauf
+  </a>
+
+  <a href="#faq" className="transition hover:text-[#F3D24F]">
+    FAQ
+  </a>
+
+  <Link href="/kontakt" className="transition hover:text-[#F3D24F]">
+    Kontakt
+  </Link>
+</nav>
 
           <div className="flex items-center gap-3">
             <Link
