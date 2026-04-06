@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function FractionalInvestingPage() {
   const [investment, setInvestment] = useState(5000);
 
-  const yearlyReturn = 0.08;
+  const yearlyReturn = 0.12;
   const monthly = ((investment * yearlyReturn) / 12).toFixed(2);
 
   return (
@@ -74,13 +74,17 @@ export default function FractionalInvestingPage() {
           Investition: <span className="text-white">{investment} €</span>
         </p>
 
-        <p className="text-gray-400">
-          Geschätzte monatliche Einnahmen (8% jährlich):
-        </p>
+       <p className="text-gray-400">
+  Geschätzte monatliche Einnahmen (bis zu 12% jährlich):
+</p>
 
-        <p className="text-3xl font-bold mt-2 text-yellow-400">
-          ~ {monthly} € / Monat
-        </p>
+<p className="text-3xl font-bold mt-2 text-yellow-400">
+  ~ {monthly} € / Monat
+</p>
+
+<p className="text-xs text-gray-500 mt-4">
+  Hinweis: Die dargestellten Renditen sind Beispiele und nicht garantiert.
+</p>
       </section>
 
       {/* TRUST */}
