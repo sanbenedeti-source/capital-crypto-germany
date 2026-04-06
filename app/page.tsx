@@ -430,31 +430,38 @@ export default function HomePage() {
               {t.heroTitle}
             </h1>
 
-            <p className="mt-8 max-w-2xl text-xl leading-9 text-slate-200">
-              {t.heroText}
-            </p>
+      <p className="mt-8 max-w-2xl text-xl leading-9 text-slate-200">
+  {t.heroText}
+</p>
 
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                href="/fallanalyse"
-                className="rounded-2xl bg-[#F3D24F] px-8 py-4 text-lg font-semibold text-black transition hover:brightness-105"
-              >
-                {t.heroBtn1}
-              </Link>
+<div className="mt-10 flex flex-wrap gap-4">
+  <Link
+    href="/fallanalyse"
+    className="rounded-2xl bg-[#F3D24F] px-8 py-4 text-lg font-semibold text-black transition hover:brightness-105"
+  >
+    {t.heroBtn1}
+  </Link>
 
-              <a
-                href="#ablauf"
-                className="rounded-2xl border border-white/10 bg-[#0A1328] px-8 py-4 text-lg font-semibold text-white transition hover:bg-white/5"
-              >
-                {t.heroBtn2}
-              </a>
-            </div>
-          </div>
+  <a
+    href="#ablauf"
+    className="rounded-2xl border border-white/10 bg-[#0A1328] px-8 py-4 text-lg font-semibold text-white transition hover:bg-white/5"
+  >
+    {t.heroBtn2}
+  </a>
 
-          <div
-            id="kontakt-form"
-            className="rounded-[30px] border border-white/10 bg-[#0A1328] p-6 shadow-[0_0_40px_rgba(0,0,0,0.35)] lg:p-8"
-          >
+  <Link
+    href="/fractional-investing"
+    className="rounded-2xl bg-gradient-to-r from-yellow-400 to-yellow-600 px-8 py-4 text-lg font-semibold text-black transition hover:brightness-110"
+  >
+    Immobilien Investment
+  </Link>
+</div>
+</div>
+
+<div
+  id="kontakt-form"
+  className="rounded-[30px] border border-white/10 bg-[#0A1328] p-6 shadow-[0_0_40px_rgba(0,0,0,0.35)] lg:p-8"
+>
             <h2 className="max-w-2xl text-3xl font-semibold leading-tight text-white lg:text-5xl">
               {t.formTitle}
             </h2>
