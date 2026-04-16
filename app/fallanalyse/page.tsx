@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
+    gtag?: (...args: unknown[]) => void;
   }
 }
 
@@ -152,13 +153,13 @@ export default function FallAnalysePage() {
     const formData = new FormData(form);
 
     const payload = {
-      name: String(formData.get('name') || ''),
-      email: String(formData.get('email') || ''),
-      phone: String(formData.get('phone') || ''),
-      platform: String(formData.get('platform') || ''),
-      wallet: String(formData.get('wallet') || ''),
-      transactionHash: String(formData.get('transactionHash') || ''),
-      description: String(formData.get('description') || ''),
+      name: String(formData.get('name') || '').trim(),
+      email: String(formData.get('email') || '').trim(),
+      phone: String(formData.get('phone') || '').trim(),
+      platform: String(formData.get('platform') || '').trim(),
+      wallet: String(formData.get('wallet') || '').trim(),
+      transactionHash: String(formData.get('transactionHash') || '').trim(),
+      description: String(formData.get('description') || '').trim(),
     };
 
     try {
@@ -175,15 +176,26 @@ export default function FallAnalysePage() {
         return;
       }
 
+      // Meta Pixel lead event
       if (typeof window !== 'undefined' && window.fbq) {
         window.fbq('track', 'Lead');
+      }
+
+      // Google Ads conversion event
+      // IMPORTANT:
+      // Replace AW-18084183990/XXXXXXXXXXX with the exact send_to value
+      // from Google Ads > See event snippet
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'conversion', {
+        send_to: 'AW-18084183990/iWJZCPbwgJ0cELb_mq9D',
+        });
       }
 
       setMessage(`${t.sendSuccess} Lead ID: ${data.leadId}`);
       form.reset();
 
       const text = encodeURIComponent(
-        'Guten Tag, hier ist CAPITAL CRYPTO BROKER. Eine neue Anfrage wurde soeben über die Website eingereicht.'
+        'Guten Tag, hier ist CAPITAL CRYPTO GERMANY. Eine neue Anfrage wurde soeben über die Website eingereicht.'
       );
 
       setTimeout(() => {
