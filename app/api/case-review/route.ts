@@ -1,10 +1,8 @@
-import { NextResponse } from 'next/server';
-import { getSupabaseAdmin } from '../../../lib/supabase-admin';
-import { sendLeadEmail, sendAutoReply } from '../../../lib/mail';
+import { NextResponse } from "next/server";
+import { supabaseAdmin } from "@/lib/supabase";
 
 export async function POST(req: Request) {
   try {
-    const supabaseAdmin = getSupabaseAdmin();
     const body = await req.json();
 
     const {
@@ -17,92 +15,42 @@ export async function POST(req: Request) {
       description,
     } = body;
 
-    if (!name || !email || !phone) {
+    if (!name || !email || !description) {
       return NextResponse.json(
-        { error: 'Missing required fields.' },
+        { error: "Missing required fields" },
         { status: 400 }
       );
     }
 
     const { data, error } = await supabaseAdmin
-      .from('leads')
+      .from("leads")
       .insert([
         {
           name,
           email,
-          phone,
-          platform,
-          wallet,
-          transaction_hash: transactionHash,
+          phone: phone || "",
+          platform: platform || "",
+          wallet: wallet || "",
+          transaction_hash: transactionHash || "",
           description,
         },
       ])
-      .select('id')
+      .select()
       .single();
 
     if (error) {
-      console.error('SUPABASE INSERT ERROR:', error);
+      console.error("Supabase error:", error);
       return NextResponse.json(
-        { error: error.message || 'Failed to save lead.' },
+        { error: "Database error" },
         { status: 500 }
       );
     }
 
-    // SEND TO CRM
-    try {
-      const crmRes = await fetch(process.env.CRM_API_URL!, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.CRM_API_TOKEN}`,
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          phone,
-          platform,
-          wallet,
-          transactionHash,
-          description,
-          source: 'website',
-        }),
-      });
-
-      const crmText = await crmRes.text();
-
-      console.log('CRM STATUS:', crmRes.status);
-      console.log('CRM RESPONSE:', crmText);
-
-      if (!crmRes.ok) {
-        console.error('CRM REQUEST FAILED');
-      }
-    } catch (err) {
-      console.error('CRM ERROR:', err);
-    }
-
-    await sendLeadEmail({
-      name,
-      email,
-      phone,
-      platform,
-      wallet,
-      transactionHash,
-      description,
-    });
-
-    await sendAutoReply({
-      fullName: name,
-      email,
-    });
-
-    return NextResponse.json({
-      success: true,
-      leadId: data.id,
-    });
-  } catch (error) {
-    console.error('CASE REVIEW API ERROR:', error);
+    return NextResponse.json({ success: true, data, leadId: data.id });
+  } catch (err) {
+    console.error("Server error:", err);
     return NextResponse.json(
-      { error: 'Server error.' },
+      { error: "Server error" },
       { status: 500 }
     );
   }
