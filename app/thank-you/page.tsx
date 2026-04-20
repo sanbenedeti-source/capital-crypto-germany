@@ -4,11 +4,14 @@ import { useEffect } from "react";
 
 export default function ThankYouPage() {
   useEffect(() => {
-    // 👉 Google Ads Conversion
     if (typeof window !== "undefined" && (window as any).gtag) {
+      console.log("🔥 Conversion fired");
+
       (window as any).gtag("event", "conversion", {
         send_to: "AW-18084183990/TDM-CPSI_z4cELb_mq9D",
       });
+    } else {
+      console.log("❌ gtag NOT FOUND");
     }
   }, []);
 
@@ -19,14 +22,14 @@ export default function ThankYouPage() {
           Vielen Dank!
         </h1>
         <p className="text-lg mb-6">
-          Ihre Anfrage wurde erfolgreich gesendet. Unser Team wird sich in Kürze bei Ihnen melden.
+          Ihre Anfrage wurde erfolgreich gesendet.
         </p>
 
         <a
           href="/"
-          className="bg-yellow-400 text-black px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition"
+          className="bg-yellow-400 text-black px-6 py-3 rounded-xl font-semibold"
         >
-          Zurück zur Startseite
+          Zurück
         </a>
       </div>
     </div>
