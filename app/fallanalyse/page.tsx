@@ -116,6 +116,8 @@ const translations: Record<Language, Translation> = {
   },
 };
 
+const GOOGLE_ADS_SEND_TO = 'AW-18084183990/TDM-CPSI_z4cELb_mq9D';
+
 export default function FallAnalysePage() {
   const [lang, setLang] = useState<Language>('de');
   const [loading, setLoading] = useState(false);
@@ -163,47 +165,30 @@ export default function FallAnalysePage() {
     };
 
     try {
-      const res = await fetch('/api/case-review', {
+      const res = await fetch('/api/send-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
-const data = await res.json();
+      const data = await res.json();
 
-if (!res.ok) {
-  setMessage(data.error || t.sendError);
-  return;
+   if (res.ok) {
+  window.location.href = "/thank-you";
 }
 
-// Meta Pixel lead event
-if (typeof window !== "undefined" && window.fbq) {
-  window.fbq("track", "Lead");
-}
-
-// Google Ads conversion event
-if (typeof window !== "undefined" && window.gtag) {
-  window.gtag("event", "conversion", {
-    send_to: "AW-18084183990/LWzVCNLJnpscELb_mq9D",
-  });
-}
-
-      // Meta Pixel lead event
-      if (typeof window !== 'undefined' && window.fbq) {
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
         window.fbq('track', 'Lead');
       }
 
+   if (typeof window !== "undefined" && (window as any).gtag) {
+  (window as any).gtag('event', 'conversion', {
+    send_to: 'AW-18084183990/TDM-CPSI_z4cELb_mq9D'
+  });
+}
 
-      setMessage(`${t.sendSuccess} Lead ID: ${data.leadId}`);
+      setMessage(t.sendSuccess);
       form.reset();
-
-      const text = encodeURIComponent(
-        'Guten Tag, hier ist CAPITAL CRYPTO GERMANY. Eine neue Anfrage wurde soeben über die Website eingereicht.'
-      );
-
-      setTimeout(() => {
-        window.location.href = `https://wa.me/4915783358244?text=${text}`;
-      }, 300);
     } catch {
       setMessage(t.networkError);
     } finally {
@@ -351,6 +336,7 @@ if (typeof window !== "undefined" && window.gtag) {
                   type="text"
                   name="name"
                   placeholder={t.formName}
+                  required
                   className="w-full rounded-2xl border border-white/10 bg-[#020817] px-5 py-4 text-base text-white placeholder:text-slate-500 outline-none focus:border-[#F3D24F]"
                 />
               </div>
@@ -363,6 +349,7 @@ if (typeof window !== "undefined" && window.gtag) {
                   type="email"
                   name="email"
                   placeholder={t.formEmail}
+                  required
                   className="w-full rounded-2xl border border-white/10 bg-[#020817] px-5 py-4 text-base text-white placeholder:text-slate-500 outline-none focus:border-[#F3D24F]"
                 />
               </div>

@@ -16,25 +16,19 @@ export async function POST(req: NextRequest) {
       description: String(body.description || "").trim(),
     });
 
-    if (!result.crmOk) {
-      return NextResponse.json(
-        {
-          error: result.crmData?.message || "CRM sync failed",
-          details: result.crmData,
-        },
-        { status: 400 }
-      );
-    }
-
     return NextResponse.json({
       success: true,
-      message: "Lead saved to Supabase and sent to CRM",
-      data: result.crmData,
+      message: result.crmOk
+        ? "Lead saved to Supabase and sent to CRM"
+        : "Lead saved but CRM failed",
+      crmOk: result.crmOk,
     });
+
   } catch (error: any) {
     console.error("SEND-LEAD ERROR:", error);
+
     return NextResponse.json(
-      { error: error.message || "Server error" },
+      { success: false, error: error?.message || "Server error" },
       { status: 500 }
     );
   }

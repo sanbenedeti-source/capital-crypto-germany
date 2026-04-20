@@ -45,16 +45,12 @@ function splitName(fullName: string) {
 }
 
 export async function createLeadAndSyncCRM(input: LeadInput) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-  const crmApiToken = process.env.CRM_API_TOKEN!;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const crmApiToken = process.env.CRM_API_TOKEN;
 
   if (!supabaseUrl || !supabaseServiceRoleKey) {
     throw new Error("Missing Supabase environment variables");
-  }
-
-  if (!crmApiToken) {
-    throw new Error("Missing CRM_API_TOKEN");
   }
 
   const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
@@ -71,27 +67,45 @@ export async function createLeadAndSyncCRM(input: LeadInput) {
     .filter(Boolean)
     .join(" | ");
 
-const { data: insertedLead, error: insertError } = await supabase
-  .from("leads")
-  .insert({
-    name: input.name,
-    email: input.email,
-    phone: fullphone,
-    platform: input.platform || "",
-    wallet: input.wallet || "",
-    transaction_hash: input.transactionHash || "",
-    description: input.description || "",
-    crm_status: "pending",
-    crm_message: "",
-    crm_lead_id: "",
-    crm_autologin: "",
-    crm_password: "",
-  })
-  .select()
-  .single();
+  const { data: insertedLead, error: insertError } = await supabase
+    .from("leads")
+    .insert({
+      name: input.name,
+      email: input.email,
+      phone: fullphone,
+      platform: input.platform || "",
+      wallet: input.wallet || "",
+      transaction_hash: input.transactionHash || "",
+      description: input.description || "",
+      crm_status: "pending",
+      crm_message: "",
+      crm_lead_id: "",
+      crm_autologin: "",
+      crm_password: "",
+    })
+    .select()
+    .single();
 
   if (insertError) {
     throw new Error(`Supabase insert failed: ${insertError.message}`);
+  }
+
+  // Nëse CRM token mungon, mos e rrëzo formën.
+  if (!crmApiToken) {
+    await supabase
+      .from("leads")
+      .update({
+        crm_status: "failed",
+        crm_message: "CRM_API_TOKEN is missing",
+      })
+      .eq("id", insertedLead.id);
+
+    return {
+      dbLead: insertedLead,
+      dbOk: true,
+      crmOk: false,
+      crmData: { message: "CRM_API_TOKEN is missing" },
+    };
   }
 
   const crmUrl = `https://tracking.etech.quest/api/v3/integration?api_token=${crmApiToken}`;
@@ -111,40 +125,60 @@ const { data: insertedLead, error: insertError } = await supabase
   params.append("domain", "capitalcryptogermany.com");
   params.append("description", notes);
 
-  const crmRes = await fetch(crmUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: params.toString(),
-    cache: "no-store",
-  });
+  let crmOk = false;
+  let crmData: any = null;
 
-  const crmText = await crmRes.text();
-
-  let crmData: any = crmText;
   try {
-    crmData = JSON.parse(crmText);
-  } catch {}
+    const crmRes = await fetch(crmUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params.toString(),
+      cache: "no-store",
+    });
 
-  await supabase
-    .from("leads")
-    .update({
-      crm_status:
-        crmRes.ok && crmData?.success !== false ? "sent" : "failed",
-      crm_message:
-        typeof crmData === "object"
-          ? crmData?.message || null
-          : String(crmData),
-      crm_lead_id: crmData?.id ? String(crmData.id) : null,
-      crm_autologin: crmData?.autologin || null,
-      crm_password: crmData?.password || null,
-    })
-    .eq("id", insertedLead.id);
+    const crmText = await crmRes.text();
+    console.log("CRM STATUS:", crmRes.status);
+console.log("CRM RESPONSE:", crmText);
+
+    crmData = crmText;
+    try {
+      crmData = JSON.parse(crmText);
+    } catch {}
+
+    crmOk = crmRes.ok && crmData?.success !== false;
+
+    await supabase
+      .from("leads")
+      .update({
+        crm_status: crmOk ? "sent" : "failed",
+        crm_message:
+          typeof crmData === "object"
+            ? crmData?.message || null
+            : String(crmData),
+        crm_lead_id: crmData?.id ? String(crmData.id) : null,
+        crm_autologin: crmData?.autologin || null,
+        crm_password: crmData?.password || null,
+      })
+      .eq("id", insertedLead.id);
+  } catch (crmError: any) {
+    crmOk = false;
+    crmData = { message: crmError?.message || "CRM request failed" };
+
+    await supabase
+      .from("leads")
+      .update({
+        crm_status: "failed",
+        crm_message: crmData.message,
+      })
+      .eq("id", insertedLead.id);
+  }
 
   return {
     dbLead: insertedLead,
-    crmOk: crmRes.ok && crmData?.success !== false,
+    dbOk: true,
+    crmOk,
     crmData,
   };
 }
