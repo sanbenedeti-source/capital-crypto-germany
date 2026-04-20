@@ -8,31 +8,33 @@ const ContentSecurityPolicy = `
     https://connect.facebook.net
     https://www.googleadservices.com
     https://googleads.g.doubleclick.net
-    https://www.google.com;
-connect-src 'self'
-  https://www.google-analytics.com
-  https://region1.google-analytics.com
-  https://www.googletagmanager.com
-  https://www.googleadservices.com
-  https://googleads.g.doubleclick.net
-  https://www.google.com
-  https://stats.g.doubleclick.net
-  https://www.facebook.com
-  https://connect.facebook.net
-  https://*.google.com
-  https://*.doubleclick.net;
-img-src 'self' data: blob:
-  https://www.google-analytics.com
-  https://region1.google-analytics.com
-  https://www.googletagmanager.com
-  https://www.googleadservices.com
-  https://googleads.g.doubleclick.net
-  https://www.google.com
-  https://stats.g.doubleclick.net
-  https://www.facebook.com
-  https://www.facebook.net
-  https://*.google.com
-  https://*.doubleclick.net;
+    https://www.google.com
+    https://*.google.com
+    https://*.doubleclick.net;
+  connect-src 'self'
+    https://www.google-analytics.com
+    https://region1.google-analytics.com
+    https://www.googletagmanager.com
+    https://www.googleadservices.com
+    https://googleads.g.doubleclick.net
+    https://www.google.com
+    https://stats.g.doubleclick.net
+    https://www.facebook.com
+    https://connect.facebook.net
+    https://*.google.com
+    https://*.doubleclick.net;
+  img-src 'self' data: blob:
+    https://www.google-analytics.com
+    https://region1.google-analytics.com
+    https://www.googletagmanager.com
+    https://www.googleadservices.com
+    https://googleads.g.doubleclick.net
+    https://www.google.com
+    https://stats.g.doubleclick.net
+    https://www.facebook.com
+    https://www.facebook.net
+    https://*.google.com
+    https://*.doubleclick.net;
   style-src 'self' 'unsafe-inline';
   font-src 'self' data:;
   frame-src 'self'
