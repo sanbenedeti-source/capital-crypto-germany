@@ -16,17 +16,20 @@ export default function HeaderGate() {
           CAPITAL CRYPTO GERMANY
         </Link>
 
-        <nav className="hidden md:flex gap-8 text-sm">
-          <Link href="/analyse" className="hover:text-[#F3D24F]">
-            Analyse
-          </Link>
-          <Link href="/anlage" className="hover:text-[#F3D24F]">
-            Anlage
-          </Link>
-          <Link href="/kontakt" className="hover:text-[#F3D24F]">
-            Kontakt
-          </Link>
-        </nav>
+   <nav className="hidden md:flex gap-8 text-sm">
+  <Link href="/analyse" className="hover:text-[#F3D24F]">
+    Analyse
+  </Link>
+  <Link href="/anlage" className="hover:text-[#F3D24F]">
+    Anlage
+  </Link>
+  <Link href="/invest" className="hover:text-[#F3D24F]">
+    Invest
+  </Link>
+  <Link href="/kontakt" className="hover:text-[#F3D24F]">
+    Kontakt
+  </Link>
+</nav>
 
         <Link
           href="/analyse"
